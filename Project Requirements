@@ -1,0 +1,19 @@
+Write an ARM disassembler capable of loading an executable on Raspberry pi and disassembling it.
+It must be clean and modularso that pieces may be removed and given to students to write and replace.
+It must not be publicly visible so you don't give the answers away. (Private Repo)
+
+It must disassemble all the instructions covered in cpe390, but does not have to disassemble every instruction on an ARM.
+Try to break it up as cleanly as possible. 
+One big switch statement, calling functions, each of which handles a particular class of instruction. Perhaps subdivisions of those if needed.
+
+Handle all modes for ldr and str.
+
+ldr  r0, [r1]
+ldr  r0, [r1, #4]
+ldr  r0, [r1], #4
+ldr  r0, [r1, #4]!
+etc.
+
+A program to test all the instructions will be given.
+Must be completed by or around December 10th (Not sure about final exam times at the moment).
+The requirement of this project, independent of its functionality, is steady work by each person showing.
