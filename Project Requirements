@@ -1,5 +1,5 @@
 Write an ARM disassembler capable of loading an executable on Raspberry pi and disassembling it.
-It must be clean and modularso that pieces may be removed and given to students to write and replace.
+It must be clean and modular so that pieces may be removed and given to students to write and replace.
 It must not be publicly visible so you don't give the answers away. (Private Repo)
 
 It must disassemble all the instructions covered in cpe390, but does not have to disassemble every instruction on an ARM.
