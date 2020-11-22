@@ -11,8 +11,7 @@ int main(int argc, char* argv[])
     exe.read(binary, size);
     exe.close();
 
-    for(int i = 0; i < 32; i++)
-    {
+    for(int i = 0; i < 32; i++) {
         std::cout << std::setfill('0') << std::setw(2) << std::right << std::hex << int(binary[i]) << " ";
     }
     std::cout << std::endl;
