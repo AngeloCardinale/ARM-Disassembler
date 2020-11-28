@@ -1,22 +1,61 @@
-#include <iostream>
-#include <fstream>
-#include <iomanip>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
 #include "condition_codes.cc"
 #include "opcodes.cc"
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
-    std::ifstream exe(argv[1], std::ios::in|std::ios::binary|std::ios::ate);
-    std::streampos size = exe.tellg();
-    char* binary = new char[size];
-    exe.seekg(0, std::ios::beg);
-    exe.read(binary, size);
-    exe.close();
+    /* 
+        ARM instruction sets are little-endian, so the least significant byte is first
+    */
+    // http://www.cplusplus.com/reference/cstdio/fread/
+    FILE* pFile; 
+    long lSize;
+    char* buffer;
+    size_t result;
 
-    for(int i = 0; i < 32; i++) {
-        std::cout << std::setfill('0') << std::setw(2) << std::right << std::hex << int(binary[i]) << " ";
+    pFile = fopen(argv[1], "rb");
+    if (pFile == nullptr) {
+        fputs("File error", stderr);
+        exit(1);
     }
-    std::cout << std::endl;
+
+    // get the file size
+    fseek(pFile, 0, SEEK_END);
+    lSize = ftell(pFile);
+    rewind(pFile);
+
+    // allocate memory to contain the whole file
+    buffer = (char*) malloc(sizeof(char)*lSize);
+    if (buffer == nullptr) {
+        fputs("Memory error", stderr);
+        exit(2);
+    }
+
+    // copy the file into the buffer
+    result = fread(buffer, 1, lSize, pFile);
+    if(result != lSize) {
+        fputs("Reading error", stderr);
+        exit(3);
+    }
+    // Whole file is now loaded into the memory buffer
+
+    std::vector<uint32_t> instructions;
+
+    // https://stackoverflow.com/questions/23919953/fetch-32bit-instruction-from-binary-file-in-c
+    // instruction |= buffer[3] << 24;      // 0xDD000000
+    // instruction |= buffer[2] << 16;      // 0xddCC0000
+    // instruction |= buffer[1] << 8;       // 0xddccBB00
+    // instruction |= buffer;               // 0xddccbbAA
+    for (int i = 0; i < lSize; i+=4) {
+        uint32_t instruction = 0u;
+        for (int j = 3; j >= 0; j--) {
+            instruction |= buffer[i+j] << j*8;
+        }
+        instructions.push_back(instruction);
+    }
+
 
     /*
     CHECK SECTION 4.5
@@ -33,10 +72,10 @@ int main(int argc, char* argv[])
     Bit 20 = Set Condition Codes (0 = do not alter condition codes, 1 = set cond code)
     Bits 19-16 = Rn first operand register
     Bits 15 - 12 = Rd Destination Register
-
     */
+
     // Assuming we have every instruction code 
-    for (int i : instruction) {
+    for (int i : instructions) {
         char cond = (i >> 28) & 0xF; // Bits 31-28, the and is unnecessary if its all 32 bit instructions
         char unknown = (i >> 26) & 0x3; // Bits 27-26
         char immediate_operand = (i >> 25) % 2; // Bit 25 
@@ -53,6 +92,8 @@ int main(int argc, char* argv[])
         }
     }
 
-
+    // terminate
+    fclose (pFile);
+    free (buffer);
     return 0;
 }
