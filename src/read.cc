@@ -98,6 +98,8 @@ int main(int argc, char** argv)
     Bit 20 = Set Condition Codes (0 = do not alter condition codes, 1 = set cond code)
     Bits 19-16 = Rn first operand register
     Bits 15 - 12 = Rd Destination Register
+
+    In data processing either the 4th or 7th bit are 0 https://stackoverflow.com/questions/56295776/difference-between-arm-binary-mul-and-data-manipulation
     */
 
    
