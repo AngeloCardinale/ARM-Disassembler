@@ -35,8 +35,8 @@ int main(int argc, char* argv[])
     Bits 15 - 12 = Rd Destination Register
 
     */
-   // Assuming we have every instruction code 
-   for (int i : instruction) {
+    // Assuming we have every instruction code 
+    for (int i : instruction) {
         char cond = (i >> 28) & 0xF; // Bits 31-28, the and is unnecessary if its all 32 bit instructions
         char unknown = (i >> 26) & 0x3; // Bits 27-26
         char immediate_operand = (i >> 25) % 2; // Bit 25 
