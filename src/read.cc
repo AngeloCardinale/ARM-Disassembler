@@ -35,19 +35,19 @@ int main(int argc, char* argv[])
     */
    // Assuming we have every instruction code 
    for (int i : instruction) {
-        char cond = i >> 28; // should be the leading 4 bits
-        // no idea about bits 27 and 26
-        char immediateOperand = (i >> 15) % 2; // should give us if the immediate operand is 0 or 1
-        char opCode = (i << 7) >> 28; // left shift 31-24 to get opCode at the front, then right shift 21+7 to bring it to the back
-        char setCondCodes = (i >> 20) % 2; // get the 20th bit
-        char firstOperandRegister = (i << 12) >> 28;
-        char destinationRegister = (i << 16) >> 28;
+        char cond = (i >> 28) & 0xF; // Bits 31-28, the and is unnecessary if its all 32 bit instructions
+        char unknown = (i >> 26) & 0x3; // Bits 27-26
+        char immediateOperand = (i >> 25) % 2; // Bit 25 
+        char opCode = (i >> 21) & 0xF; // Bits 24-21
+        char setCondCodes = (i >> 20) % 2; // Bit 20
+        char firstOperandRegister = (i >> 16) & 0xF; // Bits 19-16
+        char destinationRegister = (i >> 12) & 0xF; // Bits 15-12
         if (immediateOperand) {
-            char rotate = ;
-            char immediateValue = ;
+            char rotate = (i >> 8) & 0xF; // Bits 11-8
+            char immediateValue = i & 0xFF; // Bits 7-0
         } else {
-            char shift = ;
-            char secondOperandRegister = ;
+            char shift = (i >> 4) & 0xFF; // Bits 11-4
+            char secondOperandRegister = i & 0xF; // Bits 3-0
         }
     }
 
