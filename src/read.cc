@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
+#include "type_check_funcs.cc"
 #include "condition_codes.cc"
 #include "opcodes.cc"
 
@@ -56,6 +57,31 @@ int main(int argc, char** argv)
         instructions.push_back(instruction);
     }
 
+    for (int i = 0; i < instructions.size(); i++) {
+        uint32_t instruction = instructions.at(i);
+        if (isDataProcessing(instruction)) {}
+        else if (isMultiply(instruction)) {}
+        else if (isMultiplyLong(instruction)) {}
+        else if (isSingleDataSwap(instruction)) {}        
+        else if (isBranchAndExchange(instruction)) {}
+        else if (isHDTRegOffset(instruction)) {}
+        else if (isHDTImmOffset(instruction)) {}
+        else if (isBlockDataTransfer(instruction)) {}
+        else if (isBranch(instruction)) {}
+        else if (isCoDataTransfer(instruction)) {}
+        else if (isCoDataOperation(instruction)) {}
+        else if (isCoRegisterTransfer(instruction)) {}
+        else if (isSoftwareInterrupt(instruction)) {}
+        else {
+            throw;
+        }
+    }
+
+
+
+
+
+
 
     /*
     CHECK SECTION 4.5
@@ -74,23 +100,24 @@ int main(int argc, char** argv)
     Bits 15 - 12 = Rd Destination Register
     */
 
+   
     // Assuming we have every instruction code 
-    for (int i : instructions) {
-        char cond = (i >> 28) & 0xF; // Bits 31-28, the and is unnecessary if its all 32 bit instructions
-        char unknown = (i >> 26) & 0x3; // Bits 27-26
-        char immediate_operand = (i >> 25) % 2; // Bit 25 
-        char opcode = (i >> 21) & 0xF; // Bits 24-21
-        char set_cond_codes = (i >> 20) % 2; // Bit 20
-        char first_operand_register = (i >> 16) & 0xF; // Bits 19-16
-        char destination_register = (i >> 12) & 0xF; // Bits 15-12
-        if (immediate_operand) {
-            char rotate = (i >> 8) & 0xF; // Bits 11-8
-            char immediate_value = i & 0xFF; // Bits 7-0
-        } else {
-            char shift = (i >> 4) & 0xFF; // Bits 11-4
-            char second_operand_register = i & 0xF; // Bits 3-0
-        }
-    }
+    // for (int i : instructions) {
+    //     char cond = (i >> 28) & 0xF; // Bits 31-28, the and is unnecessary if its all 32 bit instructions
+    //     char unknown = (i >> 26) & 0x3; // Bits 27-26
+    //     char immediate_operand = (i >> 25) % 2; // Bit 25 
+    //     char opcode = (i >> 21) & 0xF; // Bits 24-21
+    //     char set_cond_codes = (i >> 20) % 2; // Bit 20
+    //     char first_operand_register = (i >> 16) & 0xF; // Bits 19-16
+    //     char destination_register = (i >> 12) & 0xF; // Bits 15-12
+    //     if (immediate_operand) {
+    //         char rotate = (i >> 8) & 0xF; // Bits 11-8
+    //         char immediate_value = i & 0xFF; // Bits 7-0
+    //     } else {
+    //         char shift = (i >> 4) & 0xFF; // Bits 11-4
+    //         char second_operand_register = i & 0xF; // Bits 3-0
+    //     }
+    // }
 
     // terminate
     fclose (pFile);
