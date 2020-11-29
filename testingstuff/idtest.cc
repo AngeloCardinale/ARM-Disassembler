@@ -6,7 +6,7 @@ int main()
     int op2 = 0x30237190; //muti
     int op3 = 0x30837190; //mutiply long
 
-    int temp = op1;
+    int temp = op3;
     temp = temp << 4;                                                   //Bit shift past first 4 unnecessary bits
 
     if((temp & 0x8000000) == 0x8000000)                                 //Check if First Bit is a 1
@@ -67,9 +67,39 @@ int main()
             {
                 std::cout << "branch and exchange\n";                   //Instruction used is branch and exchange
             }
+            else if((temp & 0x400090) == 0x400090)
+            {
+                std::cout << "halfword data transfer immediate\n";
+            }
+            else if((temp & 0x1000090) == 0x1000090)
+            {
+                temp << 17;
+                if((temp & 0x90) == 0x90)
+                {
+                    std::cout << "single data swap\n";
+                }
+                else
+                {
+                    std::cout << "halfword data transfer register\n";
+                }
+            }
+            temp << 1;
+            if((temp & 0x800090) == 800090)
+            {
+                std::cout << "multiply long\n";
+            }
             else
             {
-            }
+                temp << 16;
+                if((temp & 0x90) == 0x90)
+                {
+                    std::cout << "multiply\n";
+                }
+                else
+                {
+                    std::cout << "data processing\n";
+                }
+            } 
         }
     }
 }
