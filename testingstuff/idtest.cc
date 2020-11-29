@@ -7,62 +7,69 @@ int main()
     int op3 = 0x30837190; //mutiply long
 
     int temp = op1;
-    temp = temp << 4;
+    temp = temp << 4;                                                   //Bit shift past first 4 unnecessary bits
 
-    if((temp & 0x8000000) == 0x8000000)
+    if((temp & 0x8000000) == 0x8000000)                                 //Check if First Bit is a 1
     {
-        temp = temp << 1;
-        if((temp & 0x4000000) == 0x4000000)
+        temp = temp << 1;                                               
+        if((temp & 0x4000000) == 0x4000000)                             //Check if Second Bit is a 1
         {
             temp = temp << 1;
-            if((temp & 0x2000000) == 0x2000000)
+            if((temp & 0x2000000) == 0x2000000)                         //Check if Third Bit is a 1
             {
                 temp = temp << 1;
-                if((temp & 0x1000000) == 0x1000000)
+                if((temp & 0x1000000) == 0x1000000)                     //Check if Fourth Bit is a 1
                 {
-                    std::cout << "software interupt\n";
+                    std::cout << "software interupt\n";                 //Instruction Used is Software Interupt
                 }
-                else
+                else                                                    //Fourth Bit is a 0
                 {
                     temp = temp << 20;
-                    if((temp & 0x10) == 0x10)
+                    if((temp & 0x10) == 0x10)                           //Check if 27th bit is a 1
                     {
-                        std::cout << "coprocessor register transfer\n";
+                        std::cout << "coprocessor register transfer\n"; //Instruction used is coprocessor register transfer
                     }
-                    else
+                    else                                                //27th bit is a 0
                     {
-                        std::cout << "coprocessor data operation\n";
+                        std::cout << "coprocessor data operation\n";    //Instruction used is coprocessor data Operation
                     }
                 }
             }
-            else
+            else                                                        //3rd bit is a 0 
             {
-                std::cout << "coprocessor data transfer\n";
+                std::cout << "coprocessor data transfer\n";             //Instruction used is coprocessor data transfer
             }
         }
-        else
+        else                                                            //2nd bit is a 0
         {
             temp = temp << 1;
-            if((temp & 0x2000000) == 0x2000000)
+            if((temp & 0x2000000) == 0x2000000)                         // Check if 3rd bit is a 1
             {
-                std::cout << "branch\n";
+                std::cout << "branch\n";                                //Instruction used is branch
             }
-            else
+            else                                                        //3rd bit is a 0
             {
-                std::cout << "block data transfer\n";
+                std::cout << "block data transfer\n";                   //Instruction used is a block data transfer
             }
         }
     }
-    else
+    else                                                                //first bit is 0
     {
         temp << 1;
-        if((temp & 0x4000000) == 0x4000000)
+        if((temp & 0x4000000) == 0x4000000)                             //Check if 2nd bit is a 1
         {
-            std::cout << "single data transfer\n";
+            std::cout << "single data transfer\n";                      //Instruction used is single data transfer
         }
-        else
-        {
-            temp << 2;     
+        else                                                            //2nd bit is a 0
+        {   
+            temp << 2;
+            if((temp & 0x12FFF10) == 0x12FFF10)                         //Check if we have 000100101111111111110001
+            {
+                std::cout << "branch and exchange\n";                   //Instruction used is branch and exchange
+            }
+            else
+            {
+            }
         }
     }
 }
