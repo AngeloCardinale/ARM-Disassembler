@@ -62,14 +62,7 @@ int main()
         }
         else
         {
-            temp << 2;
-            if((temp & 0x12FFF10) == 0x12FFF10)
-            {
-                std::cout << "branch and exchange\n";
-            }
-            else
-            {
-            }
+            temp << 2;     
         }
     }
 }
