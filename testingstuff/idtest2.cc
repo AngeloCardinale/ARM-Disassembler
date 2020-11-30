@@ -5,8 +5,10 @@ int main()
     int op1 = 0x92001510; //data processing
     int op2 = 0x30237190; //muti
     int op3 = 0x30837190; //mutiply long
+    int op4 = 0x310F4090; //Single data swap
+    int op5 = 0x3E0F4080; //Coprocessor data operation
 
-    int temp = op2;
+    int temp = op5;
     temp = temp >> 4;                                                   //Bit shift past first 4 unnecessary bits
     
     if((temp & 0x0000001)== 0x0000001)                                  //1st bit is 1
