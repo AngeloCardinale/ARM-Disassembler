@@ -24,9 +24,10 @@ int main(int argc, char** argv) {
         std::list<labeled_bitmask> possible_types;   //using a list for O(1) add/remove time
         
         // populate the possible types list
-        for (auto const& [k, v] : masks) { // O(1)
+        for (auto const& [k, v] : arm_bitmasks) { // O(1) // you need c++ 17
             possible_types.push_back({k, v});
         }
+
         // define an iterator for that list
         std::list<labeled_bitmask>::iterator it;
 
@@ -37,10 +38,10 @@ int main(int argc, char** argv) {
             uint8_t current_bit = (instruction >> i) % 2;
 
             // iterate through the list of possible instruction masks
-            while(it != possible_masks.end()) { // O(1)
+            while(it != possible_types.end()) { // O(1)
 
                 // save the mask bit
-                uint8_t mask_bit = (*it).mask[i];
+                uint8_t mask_bit = (*it).bitmap[i];
 
                 // if it is a skip bit then skip
                 if (mask_bit == -1) {
@@ -61,15 +62,27 @@ int main(int argc, char** argv) {
                 }
             }
 
-            if (possible_masks.size() != 1)
+            if (possible_types.size() != 1)
                 throw; // that means that the instruction was bad
             
-            arm_instruction_type type = possible_masks.at(0).label;
+            arm_instruction_types type = (*possible_types.begin()).label;
             switch(type) {
-                case arm_instruction_type.data_processing:
+                case arm_instruction_types::data_processing:
                     output.push_back(handle_data_processing(instruction));
                     break;
-                /* ... */
+
+                case arm_instruction_types::multiply:
+                    output.push_back(handle_multiply(instruction));
+                    break;
+
+                case arm_instruction_types::multiply_long:
+                    output.push_back(handle_multiply_long(instruction));
+                    break;
+
+                case arm_instruction_types::single_data_swap:
+                    output.push_back(handle_single_data_swap(instruction));
+                    break;
+
                 default:
                     output.push_back("parsing error");
                     break; 
@@ -80,4 +93,6 @@ int main(int argc, char** argv) {
     for (auto& i : output) {
         std::cout << i << '\n';
     }
+
+    return 0;
 }

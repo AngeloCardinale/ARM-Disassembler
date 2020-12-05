@@ -17,10 +17,10 @@ ARMBitmap mul_long(multiply_long_mask);
 ARMBitmap s_dat_swap(single_data_swap_mask);
 
 std::unordered_map<arm_instruction_types, ARMBitmap> arm_bitmasks ({  // c++ 17
-    { data_processing,         data_proc },
-    { multiply,                mul },
-    { multiply_long,           mul_long },
-    { single_data_swap,        s_dat_swap },
+    { arm_instruction_types::data_processing,         data_proc },
+    { arm_instruction_types::multiply,                mul },
+    { arm_instruction_types::multiply_long,           mul_long },
+    { arm_instruction_types::single_data_swap,        s_dat_swap },
 });
 
 struct labeled_bitmask {
