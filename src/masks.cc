@@ -23,11 +23,6 @@ std::unordered_map<arm_instruction_types, ARMBitmap> arm_bitmasks ({  // c++ 17
     { arm_instruction_types::single_data_swap,        s_dat_swap },
 });
 
-struct labeled_bitmask {
-    arm_instruction_types label;
-    ARMBitmap bitmap;
-};
-
 #if 0
     int main() {
         for (const auto& [k, v] : arm_bitmasks) {

@@ -9,13 +9,13 @@
 class Bitmap {
     protected:
         uint32_t num_bits;
-        int8_t* mask;
+        signed char* mask;
     public: 
         Bitmap(const uint32_t num_bits): 
-            num_bits(num_bits), mask(new int8_t[num_bits]) {
-                memset(mask, 0, num_bits*sizeof(int8_t));
+            num_bits(num_bits), mask(new signed char[num_bits]) {
+                memset(mask, 0, num_bits*sizeof(signed char));
             }
-        Bitmap(const uint32_t num_bits, int8_t* mask): 
+        Bitmap(const uint32_t num_bits, signed char* mask): 
             num_bits(num_bits), mask(mask) {
 
                 // this is an error check to make sure that everything is a -1, 0, 1
@@ -31,25 +31,27 @@ class Bitmap {
         ~Bitmap() {
             delete [] mask;
         }
-        Bitmap(const Bitmap& orig): num_bits(orig.num_bits), mask(new int8_t[orig.num_bits]) {
-            memcpy(mask, orig.mask, orig.num_bits*sizeof(int8_t));
+        Bitmap(const Bitmap& orig): num_bits(orig.num_bits), mask(new signed char[orig.num_bits]) {
+            memcpy(mask, orig.mask, orig.num_bits*sizeof(signed char));
         }
         Bitmap(Bitmap&& orig): num_bits(orig.num_bits), mask(orig.mask) {
             orig.mask = nullptr;
         }
 
         Bitmap& operator =(Bitmap orig) {
-            num_bits = orig.num_bits;
-            std::swap(mask, orig.mask);
+            if (mask != orig.mask) {
+                num_bits = orig.num_bits;
+                std::swap(mask, orig.mask);
+            }
 
             return (*this);
         }
 
         // read only
-        int8_t operator [](const int i) const {
+        signed char operator [](const int i) const {
             return this->mask[i];
         }
-        // int8_t& operator [](const int i) {
+        // signed char& operator [](const int i) {
         //     return this->mask[i];
         // }
 
@@ -65,16 +67,17 @@ class ARMBitmap : public Bitmap {
     // if it wasn't obvious, you need to use a 32 bit mask
     public: 
         ARMBitmap(): Bitmap(32) {}
-        ARMBitmap(int8_t* thirty_two_bit_mask): Bitmap(32, thirty_two_bit_mask) {}
+        ARMBitmap(signed char* thirty_two_bit_mask): Bitmap(32, thirty_two_bit_mask) {}
 };
 
 #if 0
+    #include <iostream>
     int main() {
         ARMBitmap armbitmap;
         std::cout << (int)armbitmap[2] << std::endl;
         std::cout << armbitmap << std::endl;
 
-        int8_t *mask{ new int8_t[32]{-1,-1,-1,-1,  0,0,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1}};
+        signed char *mask{ new signed char[32]{-1,-1,-1,-1,  0,0,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1,  -1,-1,-1,-1}};
         ARMBitmap armbitmap2(mask);
         std::cout << armbitmap2 << std::endl;
         std::cout << (int)armbitmap2[4] << std::endl;
