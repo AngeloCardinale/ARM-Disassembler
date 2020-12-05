@@ -22,7 +22,7 @@
                 group this data with a templated class like std::list or std::vector
 
         read_executable.cc
-            std::vector<uint32_t> instructions read_executable(const char *filepath) {}
+            std::vector<uint32_t> read_executable(const char *filepath) {}
                 returns a vector of instructions read in from a file
         
         instruction_handlers.cc
