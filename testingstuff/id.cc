@@ -3,12 +3,19 @@
 
 using namespace std;
 
+
+// the dov input
+bool check_bits(uint32_t instruction, uint32_t mask, uint32_t expected) {
+    return (instruction & mask) == expected;
+}
+
+
+
 bool bitcheck(uint32_t num, uint32_t pos)
 {
     return((num >> (pos - 1)) & 1);
 }
 
-int id(uint32_t instruction)
 {
     uint32_t type;
     bool bits[32];
