@@ -19,7 +19,14 @@ void id(uint32_t instruction)
     {
         bits[i - 1] = bitcheck(instruction, i);
     }
-    if((bits[27] == false && bits[26] == false) && (bits[7] == false || bits[4] == false)) //data processing
+    if(bits[27] == false && bits[26] == false && bits[25] == false && bits[24] == true && bits[23] == false && bits[22] == false 
+    && bits[21] == true && bits[20] == false && bits[19] == true && bits[18] == true && bits[17] == true && bits[16] == true 
+    && bits[14] == true && bits[13] == true && bits[12] == true && bits[11] == true && bits[10] == true && bits[9] == true 
+    && bits[8] == true && bits[7] == false && bits[6] == false && bits[5] == false && bits[4] == true) //branch and exchange
+    {
+        branchandex(instruction);
+    }
+    else if((bits[27] == false && bits[26] == false) && (bits[7] == false || bits[4] == false)) //data processing
     {
         dataprocessing(instruction);
     }
@@ -38,13 +45,6 @@ void id(uint32_t instruction)
     && bits[6] == false && bits[5] == false && bits[4] == true) //single data swap
     {
         singledataswap(instruction);
-    }
-    else if(bits[27] == false && bits[26] == false && bits[25] == false && bits[24] == true && bits[23] == false && bits[22] == false 
-    && bits[21] == true && bits[20] == false && bits[19] == true && bits[18] == true && bits[17] == true && bits[16] == true 
-    && bits[14] == true && bits[13] == true && bits[12] == true && bits[11] == true && bits[10] == true && bits[9] == true 
-    && bits[8] == true && bits[7] == false && bits[6] == false && bits[5] == false && bits[4] == true) //branch and exchange
-    {
-        branchandex(instruction);
     }
     else if(bits[27] == false && bits[26] == false && bits[25] == false && bits[22] == false && bits[11] == false && bits[10] == false 
     && bits[9] == false && bits[8] == false && bits[7] == true && bits[4] == true) //Half data transfer reg offset

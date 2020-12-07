@@ -1,6 +1,11 @@
 //print functions for bitwise implementation
 using namespace std;
 
+void branchandex(uint32_t instruction)
+{
+    cout << "branch and exchange\n";
+}
+
 void dataprocessing(uint32_t instruction)
 {
     cout << "data processing\n";
@@ -19,11 +24,6 @@ void multiplylong(uint32_t instruction)
 void singledataswap(uint32_t instruction)
 {
     cout << "single data swap\n";
-}
-
-void branchandex(uint32_t instruction)
-{
-    cout << "branch and exchange\n";
 }
 
 void halfdatatransreg(uint32_t instruction)

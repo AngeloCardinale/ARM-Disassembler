@@ -23,6 +23,6 @@ int main()
     cout << hex << instructions.at((i * 4) + 1) << endl;
     cout << hex << instructions.at((i * 4) + 2) << endl;
     cout << hex << instructions.at((i * 4) + 3) << endl;
-    id(0x0200A0E3);
     id(0xE3A00002);
+    id(0xE12FFF1E);
 }
