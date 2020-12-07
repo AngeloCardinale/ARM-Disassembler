@@ -68,6 +68,17 @@
         "stop_token": "cpp",
         "thread": "cpp",
         "valarray": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "any": "cpp",
+        "cfenv": "cpp",
+        "charconv": "cpp",
+        "codecvt": "cpp",
+        "csetjmp": "cpp",
+        "cuchar": "cpp",
+        "forward_list": "cpp",
+        "regex": "cpp",
+        "scoped_allocator": "cpp",
+        "shared_mutex": "cpp",
+        "typeindex": "cpp"
     }
 }
