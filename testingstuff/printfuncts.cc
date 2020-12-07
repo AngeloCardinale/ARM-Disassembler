@@ -1,71 +1,72 @@
-#include <fstream>
+//print functions for bitwise implementation
+using namespace std;
 
-void dataprocessing()
+void dataprocessing(uint32_t instruction)
 {
-
+    cout << "data processing\n";
 }
 
-void multiply()
+void multiply(uint32_t instruction)
 {
-
+    cout << "multiply\n";
 }
 
-void multiplylong()
+void multiplylong(uint32_t instruction)
 {
-
+    cout << "multiply long\n";
 }
 
-void singledataswap()
+void singledataswap(uint32_t instruction)
 {
-
+    cout << "single data swap\n";
 }
 
-void branchandex()
+void branchandex(uint32_t instruction)
 {
-
+    cout << "branch and exchange\n";
 }
 
-void halfdatatransreg()
+void halfdatatransreg(uint32_t instruction)
 {
-
+    cout << "half word data transfer register offset\n";
 }
 
-void halfdatatransimm()
+void halfdatatransimm(uint32_t instruction)
 {
-
+    cout << "half word data transfer immediate offset\n";
 }
 
-void singledatatrans()
+void singledatatrans(uint32_t instruction)
 {
-
+    cout << "single data transfer\n";
 }
 
-void blockdatatrans()
+void blockdatatrans(uint32_t instruction)
 {
-
+    cout << "block data transfer\n";
 }
 
-void branch()
+void branch(uint32_t instruction)
 {
-
+    cout << "branch\n";
 }
 
-void coprodatatrans()
+void coprodatatrans(uint32_t instruction)
 {
-
+    cout << "coprocessor data transfer\n";
 }
 
-void coprodataop()
+void coprodataop(uint32_t instruction)
 {
-
+    cout << "coprocessor data operation\n";
 }
 
-void coproregtrans()
+void coproregtrans(uint32_t instruction)
 {
-
+    cout << "coprocessor register transfer\n";
 }
 
-void softwareinterrupt()
+void softwareinterrupt(uint32_t instruction)
 {
-
+    cout << "software interrupt\n";
 }
