@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cstdint>
 #include <string>
+#include <fstream>
+#include <vector>
 #include "printfuncts.cc"
 #include "idfuncts.cc"
 #include "readfuncts.cc"

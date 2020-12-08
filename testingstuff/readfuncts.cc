@@ -1,8 +1,4 @@
 //read functions for bitwise implementation
-#include <string>
-#include <fstream>
-#include <vector>
-#include  <iomanip>
 using namespace std;
 
 vector<uint32_t> read(string executable)

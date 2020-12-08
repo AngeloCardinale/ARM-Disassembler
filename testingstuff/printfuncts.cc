@@ -1,9 +1,13 @@
 //print functions for bitwise implementation
+#include "miscfuncts.cc"
+
 using namespace std;
 
 void branchandex(uint32_t instruction)
 {
-    cout << "branch and exchange\n";
+    uint32_t cond = instruction >> 28;
+    uint32_t Rn = instruction & 0x0000000F;
+    cout << dec << "BX" << condition(cond) << " " << reg(Rn) << "\n";
 }
 
 void dataprocessing(uint32_t instruction)
@@ -68,5 +72,6 @@ void coproregtrans(uint32_t instruction)
 
 void softwareinterrupt(uint32_t instruction)
 {
-    cout << "software interrupt\n";
+    uint32_t cond = instruction >> 28;
+    cout << dec << "SWI" << condition(cond) << "\n"; //inc for now
 }
