@@ -1,7 +1,7 @@
 //read functions for bitwise implementation
 using namespace std;
 
-vector<uint32_t> read(string executable)
+vector<uint32_t> readexe(string executable)
 {
     ifstream file;
     file.open(executable, ios::binary);

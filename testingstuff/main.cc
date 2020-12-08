@@ -19,7 +19,7 @@ int main()
     int op5 = 0x310F4090; //Single data swap
     int op6 = 0x3E0F4080; //Coprocessor data operation
 
-    vector<uint32_t> instructions = read("test.out");
+    vector<uint32_t> instructions = readexe("test.out");
     int i = 61;
     cout << hex << instructions.at(i * 4) << endl;
     cout << hex << instructions.at((i * 4) + 1) << endl;
