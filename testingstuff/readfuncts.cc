@@ -3,8 +3,7 @@ using namespace std;
 
 vector<uint32_t> readexe(string executable)
 {
-    ifstream file;
-    file.open(executable, ios::binary);
+    ifstream file(executable, ios::binary);
     file.seekg(0, ios::end);
     size_t length = file.tellg();
     char* wholefile = new char[length];
