@@ -144,7 +144,17 @@ void blockdatatrans(uint32_t instruction)
 
 void branch(uint32_t instruction)
 {
-    cout << "branch\n";
+    uint32_t cond = instruction >> 28;
+    uint32_t L = (instruction >> 24) & 0x1;
+    uint32_t offset = instruction & 0xFFFFFF;
+    if(L == 1)
+    {
+        cout << dec << "BL" << condition(cond) << " " << offset;
+    }
+    else
+    {
+        cout << dec << "B" << condition(cond) << " " << offset;
+    }
 }
 
 void coprodatatrans(uint32_t instruction)
