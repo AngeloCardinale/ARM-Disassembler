@@ -14,7 +14,7 @@ void print_to_file(std::string filepath, std::vector<std::string>  &instructions
 }
 
 std::string create_instruction_text(
-    std::string condition_code, std::string operation, std::string operand1="", std::string operand2="") {
+    std::string condition_code, std::string operation, std::string operand1="", std::string operand2="", std::string operand3="", std::string operand4="", std::string operand5="",) {
         std::string space = " ";
-        return condition_code + space + operation + operand1 + space + operand2;
+        return condition_code + space + operation + space + operand1 + space + operand2 + space + operand3 + space + operand4 + space + operand5;
 }
