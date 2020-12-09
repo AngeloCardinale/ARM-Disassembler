@@ -239,7 +239,7 @@ void coprodatatrans(uint32_t instruction)
     uint32_t L = (instruction >> 20) & 0x1;             // 0 = Store to memory, 1 = load from memory
     uint32_t Rn = (instruction >> 16) & 0xF;            // Base register
     uint32_t CRd = (instruction >> 12) & 0xF;           // Coprocessor source/destination register
-    uint32_t CP# = (instruction >> 8) & 0xF;            // Coprocessor Number
+    uint32_t CPnum = (instruction >> 8) & 0xF;            // Coprocessor Number
     uint32_t Offset = instruction & 0xFF;               // Unsigned 8 bit immediate offset
 
     cout << "coprocessor data transfer\n";
@@ -265,13 +265,20 @@ void coproregtrans(uint32_t instruction)
     uint32_t L = (instruction >> 20) & 0x1;         // 0 = Store to memory, 1 = load from memory
     uint32_t CRn = (instruction >> 16) & 0xF;       // Coprocessor Operand Register
     uint32_t CRd = (instruction >> 12) & 0xF;       // Coprocessor Destination Register
-    uint32_t CP# = (instruction >> 8) & 0xF;        // Coprocessor Number
+    uint32_t CPnum = (instruction >> 8) & 0xF;        // Coprocessor Number
     uint32_t CP = (instruction >> 5) & 0xF;         // Coprocessor Information
     uint32_t CRm = instruction & 0xF;               // Coprocessor Operand Register
     
-   
+    // CP field not always existing so this may not work might need an extra if statement for this case
+   if (L == 1)
+   {
+       cout << dec << "MRC" << condition(cond) << " p" << CPnum << "," << CPOpc << "," << reg(CRd)<< ",c" << CRn << ",c" << CRm << "," << CP << "\n";
+   }
+   else 
+   {
+       cout << dec << "MRC" << condition(cond) << " p" << CPnum << "," << CPOpc << "," << reg(CRd)<< ",c" << CRn << ",c" << CRm << "," << CP << "\n";
+   }
     
-    cout << "coprocessor register transfer\n";
 }
 
 void softwareinterrupt(uint32_t instruction)
