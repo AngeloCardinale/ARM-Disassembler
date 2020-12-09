@@ -135,7 +135,54 @@ void halfdatatransreg(uint32_t instruction)
     uint32_t H = (instruction >> 5) & 0x1;              //    If SH = 10 -> Signed byte, 11 -> Signed Halfwords
     uint32_t Rm = (instruction) & 0xF;                  // Offset Register
 
+        if(P == 1)
+        {
 
+            if(U == 1)
+            {
+
+                if(W == 1)
+                {
+
+                    if(L == 1)
+                    {
+
+                        if(S == 0 && H == 0)
+                        {
+
+                        }
+                        else if (S == 0 && H == 1)
+                        {
+
+                        }
+                        else if (S == 1 && H == 0)
+                        {
+                            
+                        }
+                        else if (S == 1 && H == 1)
+                        {
+                            
+                        }
+                    }
+                    else if (L == 0)
+                    {
+                            
+                    }
+                }
+                 else if (W == 0)
+                {
+                            
+                }
+            }
+             else if (U == 0)
+            {
+                            
+            }
+        }
+         else if (P == 0)
+        {
+                            
+        }
 
     cout << "half word data transfer register offset\n";
 }
@@ -201,10 +248,9 @@ void coprodatatrans(uint32_t instruction)
 void coprodataop(uint32_t instruction)
 {
     uint32_t cond = instruction >> 28;              // Condition Field
-    uint32_t CPOpc = (instruction >> 21) & 0xF;     // Coprocessor Operation mode
-    uint32_t L = (instruction >> 20) & 0x1;         // 0 = Store to memory, 1 = load from memory
-    uint32_t CRn = (instruction >> 16) & 0xF;       // Coprocessor Operand Register
-    uint32_t CRd = (instruction >> 12) & 0xF;       // Coprocessor Destination Register
+    uint32_t CPOpc = (instruction >> 20) & 0xF;     // Coprocessor Operation Code
+    uint32_t CRn = (instruction >> 16) & 0xF;       // Coprocessor Source / Destination Register
+    uint32_t Rd = (instruction >> 12) & 0xF;       // ARM Destination Register
     uint32_t CP# = (instruction >> 8) & 0xF;        // Coprocessor Number
     uint32_t CP = (instruction >> 5) & 0xF;         // Coprocessor Information
     uint32_t CRm = instruction & 0xF;               // Coprocessor Operand Register
@@ -215,13 +261,16 @@ void coprodataop(uint32_t instruction)
 void coproregtrans(uint32_t instruction)
 {
     uint32_t cond = instruction >> 28;              // Condition Field
-    uint32_t CPOpc = (instruction >> 20) & 0xF;     // Coprocessor Operation Code
-    uint32_t CRn = (instruction >> 16) & 0xF;       // Coprocessor Source / Destination Register
-    uint32_t Rd = (instruction >> 12) & 0xF;       // ARM Destination Register
+    uint32_t CPOpc = (instruction >> 21) & 0xF;     // Coprocessor Operation mode
+    uint32_t L = (instruction >> 20) & 0x1;         // 0 = Store to memory, 1 = load from memory
+    uint32_t CRn = (instruction >> 16) & 0xF;       // Coprocessor Operand Register
+    uint32_t CRd = (instruction >> 12) & 0xF;       // Coprocessor Destination Register
     uint32_t CP# = (instruction >> 8) & 0xF;        // Coprocessor Number
     uint32_t CP = (instruction >> 5) & 0xF;         // Coprocessor Information
     uint32_t CRm = instruction & 0xF;               // Coprocessor Operand Register
-
+    
+   
+    
     cout << "coprocessor register transfer\n";
 }
 
