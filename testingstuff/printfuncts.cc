@@ -165,7 +165,8 @@ void coproregtrans(uint32_t instruction)
 void softwareinterrupt(uint32_t instruction)
 {
     uint32_t cond = instruction >> 28;
-    cout << dec << "SWI" << condition(cond) << "\n"; //inc for now
+    uint32_t expression = instruction & 0xFFFFFF;
+    cout << dec << "SWI" << condition(cond) << " " << expression << "\n";
 }
 
 void dataprocessing(uint32_t instruction)
