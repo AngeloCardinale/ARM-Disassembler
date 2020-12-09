@@ -149,19 +149,19 @@ void halfdatatransreg(uint32_t instruction)
 
                         if(S == 0 && H == 0)
                         {
-
+                            cout << dec << "SWP" << condition(cond) << "" << reg(Rd) << ",[" << reg(Rn) << "," << reg(Rn) << "]\n";
                         }
                         else if (S == 0 && H == 1)
                         {
-
+                            cout << dec << "LDRH" << condition(cond) << "" << reg(Rd) << ",[" << reg(Rn) << "," << reg(Rn) << "]\n";
                         }
                         else if (S == 1 && H == 0)
                         {
-                            
+                            cout << dec << "LDRSB" << condition(cond) << "" << reg(Rn) << "," << reg(Rd) << ",[" << reg(Rn) << "]\n";
                         }
                         else if (S == 1 && H == 1)
                         {
-                            
+                            cout << dec << "LDRSH" << condition(cond) << "" << reg(Rn) << "," << reg(Rd) << ",[" << reg(Rn) << "]\n";
                         }
                     }
                     else if (L == 0)
