@@ -17,7 +17,7 @@ std::unordered_map<unsigned int, std::string> condition_codes({
     {0xB, "LT"},   //less than
     {0xC, "GT"},   //greater than
     {0xD, "LE"},   //less than or equal
-    {0xE, "AL"}    //always (in the absence of a suffix, the condition field of most instructions is set to "always")
+    {0xE, ""}    //always (in the absence of a suffix, the condition field of most instructions is set to "always")
 });
 
 std::string get_condition_code(uint32_t instruction) {
