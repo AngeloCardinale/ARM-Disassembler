@@ -5,8 +5,9 @@
 #include <stdlib.h>
 #include <vector>
 #include <stdint.h>
+#include <string>
 
-std::vector<uint32_t> read_executable(const char* filepath) {
+std::vector<uint32_t> read_executable(std::string fpath) {
     /* 
         ARM instruction sets are little-endian, so the least significant byte is first
     */
@@ -15,7 +16,8 @@ std::vector<uint32_t> read_executable(const char* filepath) {
     long lSize;
     char* buffer;
     size_t result;
-
+    const char* filepath = fpath.c_str();
+    
     pFile = fopen(filepath, "rb");
     if (pFile == nullptr) {
         fputs("File error", stderr);
