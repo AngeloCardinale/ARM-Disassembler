@@ -1,6 +1,7 @@
 #include <string>
 
-#include "condition_codes.cc"
+#include "../condition_codes.cc"
+#include "../utils.cc"
 
 std::string handle_software_interrupt(uint32_t instruction) {
     std::string cond = get_condition_code(instruction);
