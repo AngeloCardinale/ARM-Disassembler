@@ -2,7 +2,7 @@
 #include <unordered_map>
 
 // This is a map between ARM Condition Codes (the leading 4 bits of an instruction) and their instruction suffixes
-std::unordered_map<unsigned int, std::string> condition_codes({
+std::unordered_map<uint32_t, std::string> condition_codes({
     {0x0, "EQ"},   //equal
     {0x1, "NE"},   //not equal
     {0x2, "CS"},   //unsigned higher or same
