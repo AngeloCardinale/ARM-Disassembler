@@ -37,7 +37,7 @@ std::string handle_hwdt_reg_offset(uint32_t instruction) {
                             [Rn],{+/-}Rm            offset of +/- contents of index register
         {!}         = writes back the base register (set the W bit) if ! is present
 
-        STRHR3,[R4,#14]
+        STRHR3,[R4,-R6]
         LDRNESHR11,[R0]
     */
     
