@@ -40,6 +40,7 @@ std::string handle_co_data_transfer(uint32_t instruction) {
     */
 
     std::string cond = get_condition_code(instruction);
+
     uint32_t P = (instruction >> 24) & 0x1U;             // 0 = post (add/subtract after transfer), 1 = pre (add/subtract before transfer)
     uint32_t U = (instruction >> 23) & 0x1U;             // 0 = down (subtract offset from base), 1 = up (add offset to base)
     uint32_t N = (instruction >> 22) & 0x1U;             // Transfer length
@@ -49,6 +50,15 @@ std::string handle_co_data_transfer(uint32_t instruction) {
     uint32_t CRd = (instruction >> 12) & 0xFU;           // Coprocessor source/destination register
     uint32_t CPnum = (instruction >> 8) & 0xFU;            // Coprocessor Number
     uint32_t Offset = instruction & 0xFFU;               // Unsigned 8 bit immediate offset
-    
-    
+
+    std::string instruction_text;
+    std::string L_flag = (L == 0x1U) ? "L" : "";
+
+    if(L) {
+        instruction_text = "LDC" + cond + L_flag ' p' + std::to_string(CPnum) + ',c' + std::to_string(CRd);
+    }
+    else {
+        instruction_text = "STC" + cond + L_flag ' p' + std::to_string(CPnum) + ',c' + std::to_string(CRd);
+    }
+    retrun instruction_text;
 }
