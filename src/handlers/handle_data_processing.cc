@@ -73,7 +73,7 @@ std::string handle_data_processing(uint32_t instruction) {
         uint32_t Rotate = (instruction >> 8) & 0xFU;    // Shift applied to Imm
         uint32_t Imm = instruction & 0xFFU;             // Unsigned 8 bit Immediate value
     
-    //Shifting Code Here for Register
+    //Shifting Code Here for Register TO DO*********
     if ((Shift & 0x6U) == 0x0U) //shift type logical left
     {
         uint32_t OP2reg = 0 ;
