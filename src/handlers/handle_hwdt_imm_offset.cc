@@ -56,11 +56,11 @@ std::string handle_hwdt_imm_offset(uint32_t instruction) {
     int32_t offset = (0x00U | OffsetHigh << 4) | OffsetLow; 
 
     std::string instruction_text;
-    std::string sh_sb_h = get_sb_sh_h(s, h);
+    std::string sh_sb_h = get_sb_sh_h(S, H);
     std::string ldr_str = (L == 0x1U) ? "LDR" : "STR";
-    std::exclamation = (W == 0x1U) ? "!" : "";
+    std::string exclamation = (W == 0x1U) ? "!" : "";
     std::string address;
-    if (p) { // pre indexed
+    if (P) { // pre indexed
         if (offset == 0x0U) {
             address = "[" + get_register(Rn) + "]";
         } else {
@@ -84,11 +84,11 @@ std::string handle_hwdt_imm_offset(uint32_t instruction) {
 std::string get_sb_sh_h(uint32_t s, uint32_t h) {
     std::string sh_sb_h;
     if (s) {
-        std::string sh_sb_h = (H == 0x1U) ? "SH" : "SB";
+        std::string sh_sb_h = (h == 0x1U) ? "SH" : "SB";
 
     }
     else {
-        std::string sh_sb_h = (H == 0x1U) ? "H" : "";
+        std::string sh_sb_h = (h == 0x1U) ? "H" : "";
     }
 
     return sh_sb_h;

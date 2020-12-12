@@ -30,6 +30,7 @@ std::map<uint32_t, instruction_type> bitmasks({
     {0x000008U, block_data_transfer},
     {0x000007U, single_data_transfer},
     {0x000006U, hwdt_imm_offset},
+    {0x000005U, hwdt_reg_offset},
     {0x000004U, branch_and_exchange},
     {0x000003U, single_data_swap},
     {0x000002U, multiply_long},

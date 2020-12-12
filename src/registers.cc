@@ -8,7 +8,7 @@ std::unordered_map<unsigned int, std::string> registers({
     {0x3U, "R3"},
     {0x4U, "R4"},
     {0x5U, "R5"},
-    {0x6U, "R6"},
+  d  {0x6U, "R6"},
     {0x7U, "R7"},
     {0x8U, "R8"},
     {0x9U, "R9"},

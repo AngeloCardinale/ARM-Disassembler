@@ -9,6 +9,7 @@ done             name
             block_data_transfer
            single_data_transfer
 ⚖️             hwdt_imm_offset
+⚖️            hwdt_reg_offset
 ⚖️          branch_and_exchange
 ⚖️           single_data_swap
 ⚖️            multiply_long
