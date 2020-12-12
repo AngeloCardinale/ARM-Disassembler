@@ -20,11 +20,11 @@ std::string handle_co_data_operation(uint32_t instruction) {
 
     if(CP != 0)
     {
-    std::string instruction_text = "CDP" + cond + " p" + to_string(CPnum) +"," + to_string(CPOpc) + "," + to_string(CRd) + "," + to_string(CRn) + "," + to_string(CRm) + "," + to_string(CP);
+    std::string instruction_text = "CDP" + cond + " p" + to_string(CPnum) +"," + to_string(CPOpc) + ",c" + to_string(CRd) + ",c" + to_string(CRn) + ",c" + to_string(CRm) + "," + to_string(CP);
     }
     else
     {
-    std::string instruction_text = "CDP" + cond + " p" + to_string(CPnum) +"," + to_string(CPOpc) + "," + to_string(CRd) + "," + to_string(CRn) + "," + to_string(CRm);
+    std::string instruction_text = "CDP" + cond + " p" + to_string(CPnum) +"," + to_string(CPOpc) + ",c" + to_string(CRd) + ",c" + to_string(CRn) + ",c" + to_string(CRm);
     }
     
     return instruction_text; // this return might give issues according to my test file make sure to check it

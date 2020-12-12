@@ -21,7 +21,7 @@ std::string handle_hwdt_reg_offset(uint32_t instruction) {
     uint32_t H = (instruction >> 5) & 0x1;              //    If SH = 10 -> Signed byte, 11 -> Signed Halfwords
     uint32_t Rm = (instruction) & 0xF;                  // Offset Register
 
-    std::string instruction_text = ""
+    
     
     return create_instruction_text(cond, operation, operand1, operand2);
 }

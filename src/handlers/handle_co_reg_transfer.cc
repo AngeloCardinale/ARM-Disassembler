@@ -18,6 +18,15 @@ std::string handle_co_reg_transfer(uint32_t instruction) {
     uint32_t CPnum = (instruction >> 8) & 0xF;        // Coprocessor Number
     uint32_t CP = (instruction >> 5) & 0xF;         // Coprocessor Information
     uint32_t CRm = instruction & 0xF;               // Coprocessor Operand Register
-    
+
+    If (L == 1)
+    {
+        std::string instruction_text = "MRC" + cond + " p" + to_string(CPnum) + "," + to_string(CPOpc) + ",R" + to_string(CRd) + ",c" + to_string(CRn) + ",c" + to_string(CRm) + "," to_string(CP) ;
+    }
+    else if (L == 0)
+    {
+        std::string instruction_text = "MCR" + cond + " p" + to_string(CPnum) + "," + to_string(CPOpc) + ",R" + to_string(CRd) + ",c" + to_string(CRn) + ",c" + to_string(CRm) + "," to_string(CP) ;
+    }
+
     return create_instruction_text(cond, operation, operand1, operand2);
 }
