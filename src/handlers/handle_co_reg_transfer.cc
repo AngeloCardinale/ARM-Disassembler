@@ -2,6 +2,7 @@
 
 #include "../condition_codes.cc"
 #include "../utils.cc"
+#include "../registers.cc"
 
 std::string handle_co_reg_transfer(uint32_t instruction) {
     std::string cond = get_condition_code(instruction); 
@@ -29,20 +30,20 @@ std::string handle_co_reg_transfer(uint32_t instruction) {
         <MRC|MCR>{cond}   p#,<expression 1>,cd,cn,cm{,<expression 2>}
         
     */
-    uint32_t CPOpc = (instruction >> 21) & 0xF;     // Coprocessor Operation mode
-    uint32_t L = (instruction >> 20) & 0x1;         // 0 = Store to memory, 1 = load from memory
-    uint32_t CRn = (instruction >> 16) & 0xF;       // Coprocessor Operand Register
-    uint32_t Rd = (instruction >> 12) & 0xF;       // Coprocessor Destination Register
-    uint32_t CPnum = (instruction >> 8) & 0xF;      // Coprocessor Number
-    uint32_t CP = (instruction >> 5) & 0xF;         // Coprocessor Information
-    uint32_t CRm = instruction & 0xF;               // Coprocessor Operand Register
+    uint32_t CPOpc = (instruction >> 21) & 0xFU;     // Coprocessor Operation mode
+    uint32_t L = (instruction >> 20) & 0x1U;         // 0 = Store to memory, 1 = load from memory
+    uint32_t CRn = (instruction >> 16) & 0xFU;       // Coprocessor Operand Register
+    uint32_t Rd = (instruction >> 12) & 0xFU;       // Coprocessor Destination Register
+    uint32_t CPnum = (instruction >> 8) & 0xFU;      // Coprocessor Number
+    uint32_t CP = (instruction >> 5) & 0xFU;         // Coprocessor Information
+    uint32_t CRm = instruction & 0xFU;               // Coprocessor Operand Register
 
     std::string instruction_text;
     if (L == 1) {
-        std::string instruction_text = "MRC" + cond + " p" + std::to_string(CPnum) + "," + std::to_string(CPOpc) + ",R" + std::to_string(Rd) + ",c" + std::to_string(CRn) + ",c" + std::to_string(CRm) + "," + std::to_string(CP) ;
+        std::string instruction_text = "MRC" + cond + " p" + std::to_string(CPnum) + "," + std::to_string(CPOpc) + "," + get_register(Rd) + ",c" + std::to_string(CRn) + ",c" + std::to_string(CRm) + "," + std::to_string(CP) ;
     }
     else {
-        std::string instruction_text = "MCR" + cond + " p" + std::to_string(CPnum) + "," + std::to_string(CPOpc) + ",R" + std::to_string(Rd) + ",c" + std::to_string(CRn) + ",c" + std::to_string(CRm) + "," + std::to_string(CP) ;
+        std::string instruction_text = "MCR" + cond + " p" + std::to_string(CPnum) + "," + std::to_string(CPOpc) + "," + get_register(Rd) + ",c" + std::to_string(CRn) + ",c" + std::to_string(CRm) + "," + std::to_string(CP) ;
     }
 
     return instruction_text;

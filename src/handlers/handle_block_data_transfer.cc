@@ -5,9 +5,6 @@
 
 std::string handle_block_data_transfer(uint32_t instruction) {
     std::string cond = get_condition_code(instruction);
-    std::string operation = "";
-    std::string operand1 = "";
-    std::string operand2 = "";    
 
     // INSERT BINARY STUFF HERE
     

@@ -23,12 +23,12 @@ std::string handle_multiply(uint32_t instruction) {
     
     std::string cond = get_condition_code(instruction);
     
-    uint32_t a = (instruction >> 21) & 0x1;
-    uint32_t s = (instruction >> 20) & 0x1;
-    uint32_t rd = (instruction >> 16) & 0xF;
-    uint32_t rn = (instruction >> 12) & 0xF;
-    uint32_t rs = (instruction >> 8) & 0xF;
-    uint32_t rm = (instruction) & 0xF;
+    uint32_t a = (instruction >> 21) & 0x1U;
+    uint32_t s = (instruction >> 20) & 0x1U;
+    uint32_t rd = (instruction >> 16) & 0xFU;
+    uint32_t rn = (instruction >> 12) & 0xFU;
+    uint32_t rs = (instruction >> 8) & 0xFU;
+    uint32_t rm = (instruction) & 0xFU;
 
     std::string instruction_text;
     std::string s_flag = (s == 0x1U) ? "S" : "";

@@ -4,11 +4,6 @@
 #include "../utils.cc"
 
 std::string handle_co_data_transfer(uint32_t instruction) {
-    std::string cond = get_condition_code(instruction);
-    std::string operation = "";
-    std::string operand1 = "";
-    std::string operand2 = "";    
-
     /*
         condition   = 31 - 28   condition field
         110         = 27 - 25   identifier
@@ -22,31 +17,38 @@ std::string handle_co_data_transfer(uint32_t instruction) {
         CP# (CPnum) = 11 - 8    Coprocessor number
         Offset      =  7 - 0    Unsigned 8 bit immediate offset
 
-        LDC                 = Load fromm memory to coprocessor
-        STC                 = Store from coprocessor to memory
-        MRC                 = Move from coprocessor to ARM7TDMI-S register (L=1)
-        MCR                 = Move from ARM7TDMI-S register to coprocessor (L=0)
-        p#                  = unique nuber of the required coprocessor
-        <expression 1>      = evaluated to a constant from the CP Opc field
-        Rd                  = Expression evaluationg to a valid ARM7TDMI-S register number
-        cn and cm           = evaluate to the valid coprocessor register nums,CRn, CRm respectively
-        <expression 2>      = where present is evaluated to a constant and placed in the CP field
-        
+        LDC         = Load fromm memory to coprocessor
+        STC         = Store from coprocessor to memory
+        {L}         = when present perform long transfer (N=1), otherwise perform short transfer (N=0) 
+        p#          = unique nuber of the required coprocessor
+        cd          = is an expression evaluating to a valid coprocessor register number that is placed in the CRd field
+        <Address>   = can be: 1 An expression which generates an address: <expression>
+                                The assembler will attempt to generate an instruction using the PC as
+                                a base and a corrected immediate offset to address the location given
+                                by evaluating the expression. This will be a PC relative, pre-indexed
+                                address. If the address is out of range, an error will be generated.
+                                2 A pre-indexed addressing specification:
+                                    [Rn] offset of zero
+                                    [Rn,<#expression>]{!} offset of <expression> bytes
+                                3 A post-indexed addressing specification:
+                                    [Rn],<#expression> offset of <expression> bytes
+                                    {!} write back the base register (set the W bit) if! is present
+                                    Rn is an expression evaluating to a valid ARM7TDMI-S register number.
+                            NOTE: If Rn is R15, the assembler will subtract 8 from the offset value to allow for pipelining.
         <LDC|STC>{cond} {L}  p#,cd,<Address>
         
     */
 
-    uint32_t cond = instruction >> 28;                  // Condition Field
-    uint32_t P = (instruction >> 24) & 0x1;             // 0 = post (add/subtract after transfer), 1 = pre (add/subtract before transfer)
-    uint32_t U = (instruction >> 23) & 0x1;             // 0 = down (subtract offset from base), 1 = up (add offset to base)
-    uint32_t N = (instruction >> 22) & 0x1;             // Transfer length
-    uint32_t W = (instruction >> 21) & 0x1;             // 0 = No Write-Back, 1 = Write adress into base
-    uint32_t L = (instruction >> 20) & 0x1;             // 0 = Store to memory, 1 = load from memory
-    uint32_t Rn = (instruction >> 16) & 0xF;            // Base register
-    uint32_t CRd = (instruction >> 12) & 0xF;           // Coprocessor source/destination register
-    uint32_t CPnum = (instruction >> 8) & 0xF;            // Coprocessor Number
-    uint32_t Offset = instruction & 0xFF;               // Unsigned 8 bit immediate offset
+    std::string cond = get_condition_code(instruction);
+    uint32_t P = (instruction >> 24) & 0x1U;             // 0 = post (add/subtract after transfer), 1 = pre (add/subtract before transfer)
+    uint32_t U = (instruction >> 23) & 0x1U;             // 0 = down (subtract offset from base), 1 = up (add offset to base)
+    uint32_t N = (instruction >> 22) & 0x1U;             // Transfer length
+    uint32_t W = (instruction >> 21) & 0x1U;             // 0 = No Write-Back, 1 = Write adress into base
+    uint32_t L = (instruction >> 20) & 0x1U;             // 0 = Store to memory, 1 = load from memory
+    uint32_t Rn = (instruction >> 16) & 0xFU;            // Base register
+    uint32_t CRd = (instruction >> 12) & 0xFU;           // Coprocessor source/destination register
+    uint32_t CPnum = (instruction >> 8) & 0xFU;            // Coprocessor Number
+    uint32_t Offset = instruction & 0xFFU;               // Unsigned 8 bit immediate offset
     
     
-    return create_instruction_text(cond, operation, operand1, operand2);
 }

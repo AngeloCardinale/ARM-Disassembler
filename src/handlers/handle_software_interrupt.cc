@@ -4,12 +4,23 @@
 #include "../utils.cc"
 
 std::string handle_software_interrupt(uint32_t instruction) {
-    std::string cond = get_condition_code(instruction);
-    std::string operation = "";
-    std::string operand1 = "";
-    std::string operand2 = "";    
+   
+   /*
 
-    // INSERT BINARY STUFF HERE
+        Cond            = 31 - 28  Condition field
+        1111            = 27 - 24  Identifier
+        Comment Field   = 23 - 0   Used to communicate information to the supervisor code
+
+        <expression>   = is evaluated and placed in the comment field which is ignored by ARM7TDMI-S
+        SWI{cond} <expression>
+   */
+   
+    std::string cond = get_condition_code(instruction);
+    uint32_t Comment = instruction & 0xFFFFFFU;            // Comment Field
+
+    std::string instruction_text;
+    std::string instruction_text = "SWI" + cond + ' ' + std::to_string(Comment);  //Pretty sure the comment part is wrong
+   
+    return instruction_text;
     
-    return create_instruction_text(cond, operation, operand1, operand2);
 }
