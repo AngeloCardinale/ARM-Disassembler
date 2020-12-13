@@ -66,12 +66,12 @@ std::string handle_data_processing(uint32_t instruction) {
     uint32_t Rn = (instruction >> 16) & 0xFU;     // 1st operand register
     uint32_t Rd = (instruction >> 12) & 0xFU;     // Destination register
     uint32_t Operand2 = instruction & 0xFFFU;           // Operand 2
-        //For I = 0 (Register) 
-        uint32_t Shift =  (instruction >> 4) & 0xFFU;   // Shift applied to Rm
-        uint32_t Rm = instruction & 0xFU;               // 2nd Operand register    
-        //For I = 1 (Immediate)
-        uint32_t Rotate = (instruction >> 8) & 0xFU;    // Shift applied to Imm
-        uint32_t Imm = instruction & 0xFFU;             // Unsigned 8 bit Immediate value
+    //For I = 0 (Register) 
+    uint32_t Shift =  (instruction >> 4) & 0xFFU;   // Shift applied to Rm
+    uint32_t Rm = instruction & 0xFU;               // 2nd Operand register    
+    //For I = 1 (Immediate)
+    uint32_t Rotate = (instruction >> 8) & 0xFU;    // Shift applied to Imm
+    uint32_t Imm = instruction & 0xFFU;             // Unsigned 8 bit Immediate value
     
     //Shifting Code Here for Register TO DO*********
     if ((Shift & 0x6U) == 0x0U) //shift type logical left
@@ -95,40 +95,19 @@ std::string handle_data_processing(uint32_t instruction) {
    
 
     std::string instruction_text;
+    std::string s_flag = (S == 0x1U) ? "S " : " ";
     
         if (opcode == "MOV" || opcode == "MVN")
         {
-            
-            if (S == 1)
-            {
-                std::string instruction_text = opcode + cond + "S " + get_register(Rn) + ",";
-            }
-            else 
-            {
-                std::string instruction_text = opcode + cond + " " + get_register(Rn) + ",";
-            }
+            std::string instruction_text = opcode + cond + s_flag + get_register(Rn) + ",";
         }
         else if(opcode == "CMP" || opcode == "CMN" || opcode == "TEQ" || opcode == "TST")
         {
-            if (S == 1)
-            {
-                std::string instruction_text = opcode + cond + "S " + get_register(Rn) + ",";
-            }
-            else 
-            {
-                std::string instruction_text = opcode + cond + " " + get_register(Rn) + ",";
-            }
+            std::string instruction_text = opcode + cond + s_flag + get_register(Rn) + ",";
         }
         else
         {
-            if (S == 1)
-            {
-                std::string instruction_text = opcode + cond + "S " + get_register(Rd) + "," + get_register(Rn) + ",";
-            }
-            else 
-            {
-                std::string instruction_text = opcode + cond + " " + get_register(Rd) + "," + get_register(Rn) + ",";
-            }
+            std::string instruction_text = opcode + cond + s_flag + get_register(Rd) + "," + get_register(Rn) + ",";
         }
         
     return instruction_text;

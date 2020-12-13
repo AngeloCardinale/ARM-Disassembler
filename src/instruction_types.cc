@@ -22,20 +22,20 @@ enum instruction_type {
 };
 
 std::map<uint32_t, instruction_type> bitmasks({
-    {0x00000DU, software_interrupt},
-    {0x00000CU, co_reg_transfer},
-    {0x00000BU, co_data_operation},
-    {0x00000AU, co_data_transfer},
-    {0x000009U, branch},
-    {0x000008U, block_data_transfer},
-    {0x000007U, single_data_transfer},
-    {0x000006U, hwdt_imm_offset},
-    {0x000005U, hwdt_reg_offset},
-    {0x000004U, branch_and_exchange},
-    {0x000003U, single_data_swap},
-    {0x000002U, multiply_long},
-    {0x000001U, multiply},
-    {0x000000U, data_processing},
+    {0x0F000000U, software_interrupt},
+    {0x0E000010U, co_reg_transfer},
+    {0x0E000000U, co_data_operation},
+    {0x0C000000U, co_data_transfer},
+    {0x0A000000U, branch},
+    {0x08000000U, block_data_transfer},
+    {0x04000000U, single_data_transfer},
+    {0x00400090U, hwdt_imm_offset},
+    {0x00000090U, hwdt_reg_offset},
+    {0x012FFF10U, branch_and_exchange},
+    {0x01000090U, single_data_swap},
+    {0x00800090U, multiply_long},
+    {0x00000090U, multiply},
+    {0x00000000U, data_processing},
 
     // {hex_for_mask_to_check_type, instruction_type}
 });
