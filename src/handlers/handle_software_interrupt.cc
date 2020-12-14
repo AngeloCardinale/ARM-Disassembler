@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 #include "../condition_codes.cc"
@@ -19,7 +20,7 @@ std::string handle_software_interrupt(uint32_t instruction) {
     uint32_t Comment = instruction & 0xFFFFFFU;            // Comment Field
 
     std::string instruction_text;
-    std::string instruction_text = "SWI" + cond + ' ' + std::to_string(Comment);  //Pretty sure the comment part is wrong
+    instruction_text = "SWI" + cond + ' ' + std::to_string(Comment);  //Pretty sure the comment part is wrong
    
     return instruction_text;
     

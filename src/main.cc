@@ -36,7 +36,7 @@ int main( int argc, char** argv) {
 
     for (uint32_t instruction : instructions) {
         instruction_type type = get_instruction_type(instruction);
-
+        
         switch(type) {
             case instruction_type::data_processing:
                 output.push_back(handle_data_processing(instruction));

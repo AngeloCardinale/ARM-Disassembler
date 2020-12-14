@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 #include "../condition_codes.cc"
@@ -77,19 +78,4 @@ std::string handle_hwdt_imm_offset(uint32_t instruction) {
 
     instruction_text = ldr_str + cond + sh_sb_h + get_register(Rd) + "," + address;
     return instruction_text;
-}
-
-
-
-std::string get_sb_sh_h(uint32_t s, uint32_t h) {
-    std::string sh_sb_h;
-    if (s) {
-        std::string sh_sb_h = (h == 0x1U) ? "SH" : "SB";
-
-    }
-    else {
-        std::string sh_sb_h = (h == 0x1U) ? "H" : "";
-    }
-
-    return sh_sb_h;
-}   
+}  

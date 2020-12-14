@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 #include "../condition_codes.cc"
@@ -110,5 +111,5 @@ std::string handle_data_processing(uint32_t instruction) {
             std::string instruction_text = opcode + cond + s_flag + get_register(Rd) + "," + get_register(Rn) + ",";
         }
         
-    return instruction_text;
+    return "data processing";
 }

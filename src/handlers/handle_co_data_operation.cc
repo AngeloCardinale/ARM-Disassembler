@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include <stdio.h>
 #include "../condition_codes.cc"

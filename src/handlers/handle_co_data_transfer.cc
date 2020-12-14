@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 
 #include "../condition_codes.cc"
@@ -55,10 +56,11 @@ std::string handle_co_data_transfer(uint32_t instruction) {
     std::string L_flag = (L == 0x1U) ? "L" : "";
 
     if(L) {
-        instruction_text = "LDC" + cond + L_flag ' p' + std::to_string(CPnum) + ',c' + std::to_string(CRd);
+        instruction_text = "LDC" + cond + L_flag +  " p" + std::to_string(CPnum) + ",c" + std::to_string(CRd);
     }
     else {
-        instruction_text = "STC" + cond + L_flag ' p' + std::to_string(CPnum) + ',c' + std::to_string(CRd);
+        instruction_text = "STC" + cond + L_flag + " p" + std::to_string(CPnum) + ",c" + std::to_string(CRd);
     }
-    retrun instruction_text;
+
+    return instruction_text;
 }

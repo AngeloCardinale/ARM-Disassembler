@@ -1,8 +1,20 @@
+#pragma once
 #include <string>
 
 #include "../condition_codes.cc"
 #include "../registers.cc"
 #include "../utils.cc"
+
+std::string get_shift(uint32_t I, uint32_t offset) {
+    std::string output = "output";
+    if (I) { // shift and Rm
+
+    } else { // Immediate offset
+
+    }
+    
+    return output;
+}
 
 std::string handle_single_data_transfer(uint32_t instruction) {
    
@@ -74,16 +86,5 @@ std::string handle_single_data_transfer(uint32_t instruction) {
 
 
 
-    return instruction_text;
-}
-
-std::string get_shift(uint32_t I, uint32_t offset) {
-    std::string output;
-    if (I) { // shift and Rm
-
-    } else { // Immediate offset
-
-    }
-    
-    return output;
+    return "single data transfer";
 }
