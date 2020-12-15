@@ -3,14 +3,15 @@
 
 #include "../condition_codes.cc"
 #include "../registers.cc"
+#include "../shift.cc"
 #include "../utils.cc"
 
-std::string get_shift(uint32_t I, uint32_t offset) {
-    std::string output = "output";
+std::string get_shift(uint32_t I, uint32_t offset, uint32_t Rm, std::string pos_neg) {
+    std::string output;
     if (I) { // shift and Rm
-
+        output = pos_neg + get_register(Rm) + shift(offset);
     } else { // Immediate offset
-
+        output = "#" + std::to_string(offset);
     }
     
     return output;
@@ -67,10 +68,10 @@ std::string handle_single_data_transfer(uint32_t instruction) {
     uint32_t offset = (instruction) & 0xFFFU;
 
     std::string instruction_text;
-    std::string lsl_lsr = "";
     std::string exclamation = (W == 0x1U) ? "!" : "";
     std::string pos_neg = (U == 0x1U) ? "" : "-";
-    std::string shift_text = get_shift(I, offset);
+    std::string B_flag = (B == 0x1U) ? "B" : "";
+    std::string shift_text = get_shift(I, offset, Rm, pos_neg);
     std::string address;
     if (P) { // pre indexed
         if (offset == 0x0U) {
@@ -80,11 +81,20 @@ std::string handle_single_data_transfer(uint32_t instruction) {
         }
     }
     else {  // post indexed
-        //TODO
+        if (offset == 0x0U) {
+            address = "[" + get_register(Rn) + "]";
+        } else {
+            address = "[" + get_register(Rn) + "]," + shift_text;
+        }
     }
 
 
+    if (L) { // load
+        instruction_text = "LDR" + cond + B_flag + get_register(Rd) + address;
+    } 
+    else {  // store
+        instruction_text = "STR" + cond + B_flag + get_register(Rd) + address;
+    }
 
-
-    return "single data transfer";
+    return instruction_text;
 }

@@ -44,6 +44,10 @@ std::map<uint32_t, instruction_type> bitmasks({
 instruction_type get_instruction_type(uint32_t instruction) {
     for (const auto& [mask, type] : bitmasks) {
         if (check_bits(instruction, mask, mask) == 1) {
+            if (type == instruction_type::multiply || type == instruction_type::hwdt_reg_offset) {
+                // do your bit checking
+                return ((instruction) >> 6 | 0x0) > 0x0 ? instruction_type::multiply : instruction_type::hwdt_reg_offset;
+            }
             return type;
         }
     }

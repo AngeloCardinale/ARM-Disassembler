@@ -4,7 +4,7 @@ done             name
 ⚖️             software_interrupt  The comment  / output might be wrong check this
 ⚖️             co_reg_transfer
 ⚖️             co_data_operation
-👷             co_data_transfer
+⚖️             co_data_transfer
 ⚖️             branch
 👷             block_data_transfer
 👷             single_data_transfer

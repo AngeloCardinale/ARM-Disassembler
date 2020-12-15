@@ -2,6 +2,7 @@
 #include <string>
 
 #include "../condition_codes.cc"
+#include "../registers.cc"
 #include "../utils.cc"
 
 std::string handle_co_data_transfer(uint32_t instruction) {
@@ -53,13 +54,29 @@ std::string handle_co_data_transfer(uint32_t instruction) {
     uint32_t Offset = instruction & 0xFFU;               // Unsigned 8 bit immediate offset
 
     std::string instruction_text;
-    std::string L_flag = (L == 0x1U) ? "L" : "";
+    std::string N_flag = (N == 0x1U) ? "L" : "";
+    std::string exclamation = (W == 0x1U) ? "!" : "";
+    std::string address;
+    if (P) {  // pre indexed
+        if (Offset == 0x00U) {
+            address = "[" + get_register(Rn) + "]";
+        } else {
+            address = "[" + get_register(Rn) + ",#" + std::to_string(Offset) + "]" + exclamation;
+        }
+    }
+    else {  // post indexed
+        if (Offset == 0x00U) {
+            address = "[" + get_register(Rn) + "]";
+        } else {
+            address = "[" + get_register(Rn) + "],#" + std::to_string(Offset) + exclamation; 
+        }
+    }
 
     if(L) {
-        instruction_text = "LDC" + cond + L_flag +  " p" + std::to_string(CPnum) + ",c" + std::to_string(CRd);
+        instruction_text = "LDC" + cond + N_flag + "p" + std::to_string(CPnum) + ",c" + std::to_string(CRd) + address;
     }
     else {
-        instruction_text = "STC" + cond + L_flag + " p" + std::to_string(CPnum) + ",c" + std::to_string(CRd);
+        instruction_text = "STC" + cond + N_flag + "p" + std::to_string(CPnum) + ",c" + std::to_string(CRd) + address;
     }
 
     return instruction_text;
