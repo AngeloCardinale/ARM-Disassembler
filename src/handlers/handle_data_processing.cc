@@ -74,22 +74,24 @@ std::string handle_data_processing(uint32_t instruction) {
     uint32_t Rotate = (instruction >> 8) & 0xFU;    // Shift applied to Imm
     uint32_t Imm = instruction & 0xFFU;             // Unsigned 8 bit Immediate value
     
-    //Shifting Code Here for Register TO DO*********
+    //Shifting Code Here for Register ********TO DO*********
+    
     if ((Shift & 0x6U) == 0x0U) //shift type logical left
     {
-        uint32_t OP2reg = 0 ;
+        //uint32_t OP2reg = (Shift & 0x1U) ? 1 : 2 ; 
+        uint32_t OP2reg = Rm << ((shift >> 3) & 0x1FU);
     }
-    else if((Shift & 0x6U) == 0x2U) // shift type logical right
+    else if((Shift & 0x6U) == 0x2U) // shift type logical right (Fill in the left side with 0s)
     {
-        uint32_t OP2reg = 0 ;
+        uint32_t OP2reg = Rm >> ((shift >> 3) & 0x1FU); //****CHECK HOW TO MAKE LOGICAL VS ARITHMETIC****
     }
-    else if((Shift & 0x6U) == 0x4U) // shift type arithmetic right
+    else if((Shift & 0x6U) == 0x4U) // shift type arithmetic right (Fill in the left side with what is contained in bit 31)
     {
-        uint32_t OP2reg = 0 ;
+        uint32_t OP2reg = Rm >> ((shift >> 3) & 0x1FU); //****CHECK HOW TO MAKE ARITHMETIC VS LOGICAL****
     }
     else if((Shift & 0x6U) == 0x6U) // shift type rotate right
     {
-        uint32_t OP2reg = 0 ;
+        uint32_t OP2reg = 0 ; //****ROTATE TO FILL (TAKE FROM THE RIGHT SIDE AND MOVE TO LEFT)****
     }
 
     uint32_t Op2imm =Imm >> (2*Rotate); //rotate right by twice rotate field
