@@ -2,6 +2,7 @@
 #include <string>
 
 #include "../condition_codes.cc"
+#include "../registers.cc"
 #include "../utils.cc"
 
 std::string handle_block_data_transfer(uint32_t instruction) {
@@ -30,12 +31,97 @@ std::string handle_block_data_transfer(uint32_t instruction) {
     uint32_t Register_List = instruction & 0xFFFFU;
 
     std::string instruction_text;
+    std::string W_flag = (W == 0x1U) ? "!" : "";
+    std::string S_flag = (S == 0x1U) ? "^" : "";
+    std::string Rlist;
 
-    if(L) {
-        instruction_text = "LDM" + cond;
+    for (int i = 0; i < 16; i++) {
+        int count = 0;
+        if((Register_List >> i) & 0x1U == 0x1U) {
+            if(count == 0) {
+                Rlist = Rlist + get_register(i);
+            }
+            else {
+                Rlist = Rlist + "," + get_register(i);
+            }
+        }
+    }
+    
+    if(L == 0x1U) {
+        if(P == 0x1U) {
+            if(U == 0x1U) {
+                if(get_register(Rn) == "SP") {
+                    instruction_text = "LDM" + cond + "ED " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+                else {
+                    instruction_text = "LDM" + cond + "IB " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+            }
+            else {
+                if(get_register(Rn) == "SP") {
+                    instruction_text = "LDM" + cond + + "EA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+                else {
+                    instruction_text = "LDM" + cond + + "DB " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                } 
+            } 
+        }
+        else {
+            if(U == 0x1U) {
+                if(get_register(Rn) == "SP") {
+                    instruction_text = "LDM" + cond + + "FD " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+                else {
+                    instruction_text = "LDM" + cond + + "IA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+            }
+            else {
+                if(get_register(Rn) == "SP") {
+                    instruction_text = "LDM" + cond + + "FA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+                else {
+                    instruction_text = "LDM" + cond + + "DA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                } 
+            } 
+        }
     }
     else {
-        instruction_text = "STM" + cond;
+        if(P == 0x1U) {
+            if(U == 0x1U) {
+                if(get_register(Rn) == "SP") {
+                    instruction_text = "STM" + cond + "FA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+                else {
+                    instruction_text = "STM" + cond + "IB " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+            }
+            else {
+                if(get_register(Rn) == "SP") {
+                    instruction_text = "STM" + cond + "FD " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+                else {
+                    instruction_text = "STM" + cond + "DB " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                } 
+            } 
+        }
+        else {
+            if(U == 0x1U) {
+                if(get_register(Rn) == "SP") {
+                    instruction_text = "STM" + cond + "EA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+                else {
+                    instruction_text = "STM" + cond + "IA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+            }
+            else {
+                if(get_register(Rn) == "SP") {
+                    instruction_text = "STM" + cond + "ED " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                }
+                else {
+                    instruction_text = "STM" + cond + "DA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
+                } 
+            } 
+        }
     }
 
     return instruction_text;

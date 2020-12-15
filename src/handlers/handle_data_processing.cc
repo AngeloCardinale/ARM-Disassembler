@@ -5,6 +5,7 @@
 #include "../utils.cc"
 #include "../op_codes.cc"
 #include "../registers.cc"
+#include "../shift.cc"
 
 std::string handle_data_processing(uint32_t instruction) {
     /*
@@ -74,27 +75,21 @@ std::string handle_data_processing(uint32_t instruction) {
     uint32_t Rotate = (instruction >> 8) & 0xFU;    // Shift applied to Imm
     uint32_t Imm = instruction & 0xFFU;             // Unsigned 8 bit Immediate value
     
-    //Shifting Code Here for Register ********TO DO*********
-    uint32_t OP2reg = 
-
-    uint32_t OP2imm = Imm >> (2*Rotate); //rotate right by twice rotate field
-   
 
     std::string instruction_text;
     std::string s_flag = (S == 0x1U) ? "S " : " ";
-    std::string OP2 = (I == 0x1U) ? ( " " + std::to_string(OP2imm)) : std::to_string(OP2reg);
-    
+    // This might give errors if there is nothing to shift by and the instruction should end with Rn not the shift instruction
         if (opcode == "MOV" || opcode == "MVN")
         {
-            std::string instruction_text = opcode + cond + s_flag + get_register(Rn) + "," + OP2;
+            std::string instruction_text = opcode + cond + s_flag + get_register(Rn) + "," + shiftinstruction(instruction);
         }
         else if(opcode == "CMP" || opcode == "CMN" || opcode == "TEQ" || opcode == "TST")
         {
-            std::string instruction_text = opcode + cond + s_flag + get_register(Rn) + "," + OP2;
+            std::string instruction_text = opcode + cond + s_flag + get_register(Rn) + "," + shiftinstruction(instruction);
         }
         else
         {
-            std::string instruction_text = opcode + cond + s_flag + get_register(Rd) + "," + get_register(Rn) + "," + OP2;
+            std::string instruction_text = opcode + cond + s_flag + get_register(Rd) + "," + get_register(Rn) + "," + shiftinstruction(instruction);
         }
         
     return "data processing";

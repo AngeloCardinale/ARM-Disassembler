@@ -9,7 +9,7 @@
 std::string get_shift(uint32_t I, uint32_t offset, uint32_t Rm, std::string pos_neg) {
     std::string output;
     if (I) { // shift and Rm
-        output = pos_neg + get_register(Rm) + shift(offset);
+        output = pos_neg + get_register(Rm) + "," + shift(offset);
     } else { // Immediate offset
         output = "#" + std::to_string(offset);
     }
@@ -77,7 +77,7 @@ std::string handle_single_data_transfer(uint32_t instruction) {
         if (offset == 0x0U) {
             address = "[" + get_register(Rn) + "]"; // TODO
         } else {
-            address = "[" + get_register(Rn) + ',' + shift_text; // TODO
+            address = "[" + get_register(Rn) + "," + shift_text; // TODO
         }
     }
     else {  // post indexed

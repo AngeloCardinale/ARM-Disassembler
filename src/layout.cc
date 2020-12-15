@@ -6,15 +6,15 @@ done             name
 ⚖️             co_data_operation
 ⚖️             co_data_transfer
 ⚖️             branch
-👷             block_data_transfer
-👷             single_data_transfer
+⚖️             block_data_transfer
+⚖️             single_data_transfer
 ⚖️             hwdt_imm_offset
 ⚖️             hwdt_reg_offset
 ⚖️             branch_and_exchange
 ⚖️             single_data_swap
 ⚖️             multiply_long
 ⚖️             multiply
-👷             data_processing
+⚖️             data_processing
 
 
 
