@@ -62,7 +62,6 @@ std::string handle_data_processing(uint32_t instruction) {
 
     std::string cond = get_condition_code(instruction);
     std::string opcode = get_op_code(instruction, 21); 
-    std::cout << "opcode: " << opcode << std::endl;
     uint32_t I = (instruction >> 25) & 0x1U;      // Immediate Operand 0 = operand 2 is a register, 1 = operand 2 is an immediate value
     uint32_t S = (instruction >> 20) & 0x1U;      // Set Condition Codes 0 = do not alter condition codes, 1 = set condition codes
     uint32_t Rn = (instruction >> 16) & 0xFU;     // 1st operand register
@@ -79,10 +78,13 @@ std::string handle_data_processing(uint32_t instruction) {
     std::string instruction_text;
     std::string s_flag = (S == 0x1U) ? "S " : " ";
     
-    std::string Rximm = (Imm == 0) ?  "" : (",#" + std::to_string(Imm) + ",");
-        std::string Rxreg = (Rm == 0) ?  "" :",R" + std::to_string(Rm) + ","; //possibly change to getregister(rm) + ","
+    std::string Rximm = ",#" + std::to_string(Imm) + ","; // MOVE COMMA TO SHIFT FUNCTION
+        std::string Rxreg =",R" + std::to_string(Rm) + ","; //possibly change to getregister(rm) + ","
+    
+    //std::string Rximm = (Imm == 0) ?  "" : (",#" + std::to_string(Imm) + ","); // TERNARY CHECK NOT NECESSARY
+     //   std::string Rxreg = (Rm == 0) ?  "" :",R" + std::to_string(Rm) + ",";  // TERNARY CHECK NOT NECESSARY
         std::string OP2a = (I == 0x1U) ? Rximm : Rxreg;
-       
+   
     // This might give errors if there is nothing to shift by and the instruction should end with Rn not the shift instruction
         
         if (opcode == "MOV" || opcode == "MVN")
@@ -97,6 +99,5 @@ std::string handle_data_processing(uint32_t instruction) {
         {
             instruction_text = opcode + cond + s_flag + get_register(Rd)+ "," + get_register(Rn)+ OP2a  + shift(Operand2);
         }
-    std::cout << "instr text" << instruction_text << std::endl;
     return instruction_text;
 }
