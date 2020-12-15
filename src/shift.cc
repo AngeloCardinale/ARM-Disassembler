@@ -25,7 +25,11 @@ std::string shift(uint32_t fragment) {
         shift_text = type_text + " " + get_register((fragment >> 4) & 0xF);
     }
     else { // immediate value shift
-        shift_text = type_text + " #" + std::to_string((fragment >> 3) & 0x1F);
+        uint32_t immediate_value = (fragment >> 3) & 0x1F;
+        if (immediate_value == 0x0U) {
+            return "";
+        }
+        shift_text = type_text + " #" + std::to_string(immediate_value);
     }
 
     // LSL #4
@@ -48,39 +52,27 @@ std::string shift(uint32_t fragment) {
         uint32_t Imm = instruction & 0xFFU;             // Unsigned 8 bit Immediate value
 
 
-        std::string Rximm = "#" + std::to_string(Imm) + ",";
-        std::string Rxreg = "R" + std::to_string(Rm) + ","; //possibly change to getregister(rm) + ","
+        std::string Rximm = ",#" + std::to_string(Imm) + ",";
+        std::string Rxreg = ",R" + std::to_string(Rm) + ","; //possibly change to getregister(rm) + ","
         std::string OP2a = (I == 0x1U) ? Rximm : Rxreg;
                 return OP2a;
 
         if (((Shift & 0x6U) == 0x0U) && I == 0) //shift type logical left
         {
            std::string stype = "LSL";
-           return stype;
-           // uint32_t OP2reg = (Shift & 0x1U) ? Rm << ((Shift >> 4) & 0xFU) : Rm << ((Shift >> 3) & 0x1FU) ; 
-            //uint32_t OP2reg = Rm << ((shift >> 3) & 0x1FU);
-            //uint32_t OP2reg = Rm << ((shift >> 4) & 0x1FU);
         }
         else if(((Shift & 0x6U) == 0x2U) || I == 1) // shift type logical right (Fill in the left side with 0s)
         {
             std::string stype = "LSR";
-           return stype;
-           // uint32_t OP2reg = (Shift & 0x1U) ? Rm >> ((Shift >> 4) & 0xFU) : Rm >> ((Shift >> 3) & 0x1FU) ;
-            //uint32_t OP2reg = Rm >> ((shift >> 3) & 0x1FU); //****CHECK HOW TO MAKE LOGICAL VS ARITHMETIC****
         }
         else if(((Shift & 0x6U) == 0x4U) && I == 0) // shift type arithmetic right (Fill in the left side with what is contained in bit 31)
         {
             std::string stype = "ASR";
-           return stype;
-            //uint32_t OP2reg = (Shift & 0x1U) ? Rm >> ((Shift >> 4) & 0xFU) : Rm >> ((Shift >> 3) & 0x1FU) ;
-            //uint32_t OP2reg = Rm >> ((shift >> 3) & 0x1FU); //****CHECK HOW TO MAKE ARITHMETIC VS LOGICAL****
         }
         else if(((Shift & 0x6U) == 0x6U) && I == 0) // shift type rotate right
         {
             std::string stype = "ROR";
-           return stype;
-            //uint32_t OP2reg = (Shift & 0x1U) ? ((Rm >> ((Shift >> 4) & 0xFU)) | (Rm << 32 - ((Shift >> 4) & 0xFU))) : ((Rm >> ((Shift >> 3) & 0x1FU)) | (Rm << 32 - ((Shift >> 3) & 0x1FU))) ;
-            //uint32_t OP2reg = ((Rm >> ((shift >> 3) & 0x1FU)) | (Rm << 32 - ((shift >> 3) & 0x1FU))) ; //****ROTATE TO FILL (TAKE FROM THE RIGHT SIDE AND MOVE TO LEFT)****
+            
         }
 
         std::string reg = (Shift & 0x1U) ? (" R" + std::to_string((Shift >> 4) & 0xFU)) : " #" + std::to_string((Shift >> 3) & 0x1FU); //possibly change to getregister((Shift >> 4) & 0xFU)) + ","

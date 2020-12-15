@@ -6,6 +6,7 @@
 #include <vector>
 #include <stdint.h>
 #include <string>
+#include <iomanip>
 
 std::vector<uint32_t> read_executable(std::string fpath) {
     /* 
@@ -58,7 +59,12 @@ std::vector<uint32_t> read_executable(std::string fpath) {
         }
         instructions.push_back(instruction);
     }
-
+    std::cout << "number of instructions is " << instructions.size() << std::endl;
+    
+    std::ofstream f("hex_stuff.txt");
+    for (std::uint32_t instruction : instructions) {
+        f << std::hex << std::setw(8) << std::setfill('0') << instruction << '\n';
+    }
     return instructions;
 }
 
