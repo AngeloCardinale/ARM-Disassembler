@@ -45,8 +45,12 @@ instruction_type get_instruction_type(uint32_t instruction) {
     for (const auto& [mask, type] : bitmasks) {
         if (check_bits(instruction, mask, mask) == 1) {
             if (type == instruction_type::multiply || type == instruction_type::hwdt_reg_offset) {
-                // do your bit checking
-                return ((instruction) >> 6 | 0x0) > 0x0 ? instruction_type::multiply : instruction_type::hwdt_reg_offset;
+                if(((instruction >> 5) & 0x1U == 0x0U) && ((instruction >> 6) & 0x1U == 0x0U) && ((instruction >> 23) & 0x1U == 0x0U) && ((instruction >> 24) & 0x1U == 0x0U)) {
+                    return multiply;
+                }
+                else {
+                    return hwdt_reg_offset;
+                }
             }
             return type;
         }
