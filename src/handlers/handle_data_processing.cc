@@ -78,20 +78,24 @@ std::string handle_data_processing(uint32_t instruction) {
     
     if ((Shift & 0x6U) == 0x0U) //shift type logical left
     {
-        //uint32_t OP2reg = (Shift & 0x1U) ? 1 : 2 ; 
-        uint32_t OP2reg = Rm << ((shift >> 3) & 0x1FU);
+        uint32_t OP2reg = (Shift & 0x1U) ? Rm << ((shift >> 4) & 0xFU) : Rm << ((shift >> 3) & 0x1FU) ; 
+        //uint32_t OP2reg = Rm << ((shift >> 3) & 0x1FU);
+        //uint32_t OP2reg = Rm << ((shift >> 4) & 0x1FU);
     }
     else if((Shift & 0x6U) == 0x2U) // shift type logical right (Fill in the left side with 0s)
     {
-        uint32_t OP2reg = Rm >> ((shift >> 3) & 0x1FU); //****CHECK HOW TO MAKE LOGICAL VS ARITHMETIC****
+        uint32_t OP2reg = (Shift & 0x1U) ? Rm >> ((shift >> 4) & 0xFU) : Rm >> ((shift >> 3) & 0x1FU) ;
+        //uint32_t OP2reg = Rm >> ((shift >> 3) & 0x1FU); //****CHECK HOW TO MAKE LOGICAL VS ARITHMETIC****
     }
     else if((Shift & 0x6U) == 0x4U) // shift type arithmetic right (Fill in the left side with what is contained in bit 31)
     {
-        uint32_t OP2reg = Rm >> ((shift >> 3) & 0x1FU); //****CHECK HOW TO MAKE ARITHMETIC VS LOGICAL****
+        uint32_t OP2reg = (Shift & 0x1U) ? Rm >> ((shift >> 4) & 0xFU) : Rm >> ((shift >> 3) & 0x1FU) ;
+        //uint32_t OP2reg = Rm >> ((shift >> 3) & 0x1FU); //****CHECK HOW TO MAKE ARITHMETIC VS LOGICAL****
     }
     else if((Shift & 0x6U) == 0x6U) // shift type rotate right
     {
-        uint32_t OP2reg = 0 ; //****ROTATE TO FILL (TAKE FROM THE RIGHT SIDE AND MOVE TO LEFT)****
+        uint32_t OP2reg = (Shift & 0x1U) ? ((Rm >> ((shift >> 3) & 0x1FU)) | (Rm << 32 - ((shift >> 3) & 0x1FU))) : ((Rm >> ((shift >> 4) & 0xFU)) | (Rm << 32 - ((shift >> 4) & 0xFU))) ;
+        //uint32_t OP2reg = ((Rm >> ((shift >> 3) & 0x1FU)) | (Rm << 32 - ((shift >> 3) & 0x1FU))) ; //****ROTATE TO FILL (TAKE FROM THE RIGHT SIDE AND MOVE TO LEFT)****
     }
 
     uint32_t Op2imm =Imm >> (2*Rotate); //rotate right by twice rotate field
