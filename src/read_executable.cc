@@ -1,6 +1,8 @@
 #ifndef READ_EXECUTABLE
 #define READ_EXECUTABLE
 
+#include <iostream>
+#include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
@@ -54,52 +56,15 @@ std::vector<uint32_t> read_executable(std::string fpath) {
     // instruction |= buffer[1] << 8;       // 0xddccBB00
     // instruction |= buffer;               // 0xddccbbAA
     for (int i = 0; i < lSize; i+=4) {
+        if (i == 0) {
+            continue; // skip start of file binary
+        }
         uint32_t instruction = 0u;
         instruction |= (buffer[i+3] << 24) & 0xFF000000;
         instruction |= (buffer[i+2] << 16) & 0x00FF0000;
         instruction |= (buffer[i+1] << 8) & 0x0000FF00;
         instruction |= (buffer[i]) & 0x000000FF;
-        // if ((i + j) == 975) {
-        //     std::cout << "975: \n"; 
-        //     std::cout << "BYTE: " << std::bitset<8>(buffer[i+j]).to_string() << '\n';
-        //     std::cout << "Instruction" << std::bitset<32>(instruction).to_string() << '\n';
-        // }
-        // if ((i + j) == 976) {
-        //     std::cout << "976: \n"; 
-        //     std::cout << "BYTE: " << std::bitset<8>(buffer[i+j]).to_string() << '\n';
-        //     std::cout << "Instruction" << std::bitset<32>(instruction).to_string() << '\n';
-        // }
-        // if ((i + j) == 977) {
-        //     std::cout << "977: \n"; 
-        //     std::cout << "BYTE: " << std::bitset<8>(buffer[i+j]).to_string() << '\n';
-        //     std::cout << "Instruction" << std::bitset<32>(instruction).to_string() << '\n';
-        // }
-        // if ((i + j) == 978) {
-        //     std::cout << "978: \n"; 
-        //     std::cout << "BYTE: " << std::bitset<8>(buffer[i+j]).to_string() << '\n';
-        //     std::cout << "Instruction" << std::bitset<32>(instruction).to_string() << '\n';
-        // }
-        
-        // if ((i + j) == 979) {
-        //     std::cout << "979: \n"; 
-        //     std::cout << "BYTE: " << std::bitset<8>(buffer[i+j]).to_string() << '\n';
-        //     std::cout << "Instruction" << std::bitset<32>(instruction).to_string() << '\n';
-        // }
-        // if ((i + j) == 980) {
-        //     std::cout << "980: \n"; 
-        //     std::cout << "BYTE: " << std::bitset<8>(buffer[i+j]).to_string() << '\n';
-        //     std::cout << "Instruction" << std::bitset<32>(instruction).to_string() << '\n';
-        // }
-        // if ((i + j) == 981) {
-        //     std::cout << "981: \n"; 
-        //     std::cout << "BYTE: " << std::bitset<8>(buffer[i+j]).to_string() << '\n';
-        //     std::cout << "Instruction" << std::bitset<32>(instruction).to_string() << '\n';
-        // }
-        // if ((i + j) == 982) {
-        //     std::cout << "982: \n"; 
-        //     std::cout << "BYTE: " << std::bitset<8>(buffer[i+j]).to_string() << '\n';
-        //     std::cout << "Instruction" << std::bitset<32>(instruction).to_string() << '\n';
-        // }
+
         instructions.push_back(instruction);
     }
 
