@@ -15,10 +15,9 @@ std::string handle_branch_and_exchange(uint32_t instruction) {
     */
 
     std::string cond = get_condition_code(instruction);
-
+    std::string instruction_text;
+    
     uint32_t Rn = instruction & 0xFU;
-
-    std::string instruction_text; 
 
     return instruction_text = "BX" + cond + " " + get_register(Rn);
 }

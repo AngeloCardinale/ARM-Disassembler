@@ -42,8 +42,9 @@ std::string handle_hwdt_reg_offset(uint32_t instruction) {
         LDRNESHR11,[R0]
     */
     
-    
     std::string cond = get_condition_code(instruction);
+    std::string instruction_text;
+
     uint32_t P = (instruction >> 24) & 0x1U;             // 0 = post (add/subtract after transfer), 1 = pre (add/subtract before transfer)
     uint32_t U = (instruction >> 23) & 0x1U;             // 0 = down (subtract offset from base), 1 = up (add offset to base)
     uint32_t W = (instruction >> 21) & 0x1U;             // 0 = No Write-Back, 1 = Write adress into base
@@ -53,8 +54,6 @@ std::string handle_hwdt_reg_offset(uint32_t instruction) {
     uint32_t S = (instruction >> 6) & 0x1U;              // If SH = 00 -> SWP instruction, = 01 -> Unsigned Halfwords
     uint32_t H = (instruction >> 5) & 0x1U;              //    If SH = 10 -> Signed byte, 11 -> Signed Halfwords
     uint32_t Rm = (instruction) & 0xFU;                  // Register Offset
-
-    std::string instruction_text;
     std::string sh_sb_h = get_sb_sh_h(S, H);
     std::string pos_neg = (U == 0x1U) ? "" : "-";
     std::string ldr_str = (L == 0x1U) ? "LDR" : "STR";
@@ -74,7 +73,7 @@ std::string handle_hwdt_reg_offset(uint32_t instruction) {
             address = "[" + get_register(Rn) + "]," + pos_neg + get_register(Rm);  
         }
     }
-
     instruction_text = ldr_str + cond + sh_sb_h + get_register(Rd) + "," + address;
+    
     return instruction_text;
 }  

@@ -24,7 +24,6 @@ enum instruction_type {
 };
 
 std::map<uint32_t, instruction_type> bitmasks ({
-
     {0x0F000000U, instruction_type::software_interrupt},
     {0x0E000010U, instruction_type::co_reg_transfer},
     {0x0E000000U, instruction_type::co_data_operation},
@@ -40,7 +39,6 @@ std::map<uint32_t, instruction_type> bitmasks ({
     {0x00000090U, instruction_type::multiply},
     {0x06000010U, instruction_type::undefined},
     {0x00000000U, instruction_type::data_processing},
-
     // {hex_for_mask_to_check_type, instruction_type}
 });
 
@@ -60,7 +58,6 @@ instruction_type get_instruction_type(uint32_t instruction) {
             return it->second;
         }
     }
-
     std::cout << "No valid instruction type found\n";
     throw;
 }

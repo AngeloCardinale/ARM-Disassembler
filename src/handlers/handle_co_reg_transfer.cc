@@ -6,8 +6,6 @@
 #include "../registers.cc"
 
 std::string handle_co_reg_transfer(uint32_t instruction) {
-    std::string cond = get_condition_code(instruction); 
-
     /*
         condition   = 31 - 28  condition field
         1110        = 27 - 24  identifier
@@ -31,6 +29,9 @@ std::string handle_co_reg_transfer(uint32_t instruction) {
         <MRC|MCR>{cond}   p#,<expression 1>,cd,cn,cm{,<expression 2>}
         
     */
+    std::string cond = get_condition_code(instruction);
+    std::string instruction_text;
+
     uint32_t CPOpc = (instruction >> 21) & 0xFU;     // Coprocessor Operation mode
     uint32_t L = (instruction >> 20) & 0x1U;         // 0 = Store to memory, 1 = load from memory
     uint32_t CRn = (instruction >> 16) & 0xFU;       // Coprocessor Operand Register
@@ -39,7 +40,6 @@ std::string handle_co_reg_transfer(uint32_t instruction) {
     uint32_t CP = (instruction >> 5) & 0xFU;         // Coprocessor Information
     uint32_t CRm = instruction & 0xFU;               // Coprocessor Operand Register
 
-    std::string instruction_text;
     if (L == 1) {
         std::string instruction_text = "MRC" + cond + " p" + std::to_string(CPnum) + "," + std::to_string(CPOpc) + "," + get_register(Rd) + ",c" + std::to_string(CRn) + ",c" + std::to_string(CRm) + "," + std::to_string(CP) ;
     }

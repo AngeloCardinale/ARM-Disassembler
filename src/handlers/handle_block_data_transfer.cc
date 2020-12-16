@@ -21,6 +21,7 @@ std::string handle_block_data_transfer(uint32_t instruction) {
     */
 
     std::string cond = get_condition_code(instruction);
+    std::string instruction_text;
 
     uint32_t P = (instruction >> 24) & 0x1U;
     uint32_t U = (instruction >> 23) & 0x1U;
@@ -29,8 +30,6 @@ std::string handle_block_data_transfer(uint32_t instruction) {
     uint32_t L = (instruction >> 20) & 0x1U;
     uint32_t Rn = (instruction >> 16) & 0xFU;
     uint32_t Register_List = instruction & 0xFFFFU;
-
-    std::string instruction_text;
     std::string W_flag = (W == 0x1U) ? "!" : "";
     std::string S_flag = (S == 0x1U) ? "^" : "";
     std::string Rlist;
@@ -45,8 +44,7 @@ std::string handle_block_data_transfer(uint32_t instruction) {
                 Rlist = Rlist + "," + get_register(i);
             }
             count++;
-        }
-       
+        } 
     }
     
     if(L == 0x1U) {

@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 
+//go from register addresses to register names
 std::unordered_map<unsigned int, std::string> registers({
     {0x0U, "R0"},
     {0x1U, "R1"},

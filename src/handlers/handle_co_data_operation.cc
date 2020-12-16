@@ -24,15 +24,16 @@ std::string handle_co_data_operation(uint32_t instruction) {
         CDP{cond}   p#,<expression 1>,cd,cn,cm{,<expression 2>}
         CDP     p1,10,c1,c2,c3,<expression 2>
     */
+
+    std::string cond = get_condition_code(instruction);
+    std::string instruction_text;
+
     uint32_t CPOpc = (instruction >> 20) & 0xFU;
     uint32_t CRn = (instruction >> 16) & 0xFU;
     uint32_t CRd = (instruction >> 12) & 0xFU;
     uint32_t CPnum = (instruction >> 8) & 0xFU;
     uint32_t CP = (instruction >> 5) & 0x7U;
     uint32_t CRm = instruction & 0xFU; 
-
-    std::string cond = get_condition_code(instruction);
-    std::string instruction_text;
 
     if(CP != 0) {
         instruction_text = "CDP" + cond + " p" + std::to_string(CPnum) +"," + std::to_string(CPOpc) + ",c" + std::to_string(CRd) + ",c" + std::to_string(CRn) + ",c" + std::to_string(CRm) + "," + std::to_string(CP);

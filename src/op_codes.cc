@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 
+//op codes for data processing instructions
 std::unordered_map<unsigned int, std::string> op_codes({
     {0x0U, "AND"},
     {0x1U, "EOR"},

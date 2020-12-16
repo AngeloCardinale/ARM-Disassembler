@@ -24,6 +24,7 @@ std::string handle_multiply_long(uint32_t instruction) {
         SMLAL{cond}{S} RdLo,RdHi,Rm,Rs
     */
     std::string cond = get_condition_code(instruction);
+    std::string instruction_text;
 
     uint32_t U = (instruction >> 22) & 0x1U;
     uint32_t A = (instruction >> 21) & 0x1U;
@@ -32,10 +33,9 @@ std::string handle_multiply_long(uint32_t instruction) {
     uint32_t RdLo = (instruction >> 12) & 0xFU;
     uint32_t Rs = (instruction >> 8) & 0xFU;
     uint32_t Rm = instruction & 0xFU;
-
-    std::string instruction_text;
     std::string s_flag = (S == 0x1U) ? "S" : "";
     std::string u_flag = (U == 0x1U) ? "S" : "U";
+    
     if (A) {
         instruction_text = u_flag + "MLAL" + cond + s_flag + ' ' + get_register(RdLo) + ',' + get_register(RdHi) + ',' + get_register(Rm) + ',' + get_register(Rs);
     }

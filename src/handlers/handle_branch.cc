@@ -13,11 +13,12 @@ std::string handle_branch(uint32_t instruction) {
 
         B{L}{cond} <expression>
     */
-    uint32_t L = (instruction >> 24) & 0x1U;
-    uint32_t offset = instruction & 0xFFFFFFU;
-
+   
     std::string cond = get_condition_code(instruction);
     std::string instruction_text;
+
+    uint32_t L = (instruction >> 24) & 0x1U;
+    uint32_t offset = instruction & 0xFFFFFFU;
     std::string L_flag = (L == 0x1U) ? "L" : "";
     
     return instruction_text = "B" + L_flag + cond + " " + std::to_string(offset);

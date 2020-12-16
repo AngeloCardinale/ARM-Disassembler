@@ -17,11 +17,11 @@ std::string handle_software_interrupt(uint32_t instruction) {
    */
    
     std::string cond = get_condition_code(instruction);
+    std::string instruction_text;
+
     uint32_t Comment = instruction & 0xFFFFFFU;            // Comment Field
 
-    std::string instruction_text;
     instruction_text = "SWI" + cond + ' ' + std::to_string(Comment);
    
     return instruction_text;
-    
 }

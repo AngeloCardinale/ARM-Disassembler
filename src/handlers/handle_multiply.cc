@@ -23,6 +23,7 @@ std::string handle_multiply(uint32_t instruction) {
     */
     
     std::string cond = get_condition_code(instruction);
+    std::string instruction_text;
     
     uint32_t A = (instruction >> 21) & 0x1U;
     uint32_t S = (instruction >> 20) & 0x1U;
@@ -30,9 +31,8 @@ std::string handle_multiply(uint32_t instruction) {
     uint32_t rn = (instruction >> 12) & 0xFU;
     uint32_t rs = (instruction >> 8) & 0xFU;
     uint32_t rm = (instruction) & 0xFU;
-
-    std::string instruction_text;
     std::string s_flag = (S == 0x1U) ? "S" : "";
+    
     if (A) { // MLA
         instruction_text = "MLA" + cond + s_flag + ' ' + get_register(rd) + ',' + get_register(rm) + ',' + get_register(rs) + ',' + get_register(rn);
     }

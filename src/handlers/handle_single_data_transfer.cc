@@ -55,6 +55,8 @@ std::string handle_single_data_transfer(uint32_t instruction) {
     */
     
     std::string cond = get_condition_code(instruction);
+    std::string instruction_text;
+
     uint32_t I = (instruction >> 25) & 0x1U;
     uint32_t P = (instruction >> 24) & 0x1U;
     uint32_t U = (instruction >> 23) & 0x1U;
@@ -66,13 +68,12 @@ std::string handle_single_data_transfer(uint32_t instruction) {
     uint32_t shift = (instruction >> 4) & 0xFFU;
     uint32_t Rm = (instruction) & 0xFU;
     uint32_t offset = (instruction) & 0xFFFU;
-
-    std::string instruction_text;
     std::string exclamation = (W == 0x1U) ? "!" : "";
     std::string pos_neg = (U == 0x1U) ? "" : "-";
     std::string B_flag = (B == 0x1U) ? "B" : "";
     std::string shift_text = get_shift(I, offset, Rm, pos_neg);
     std::string address;
+
     if (P) { // pre indexed
         if (offset == 0x0U) {
             address = "[" + get_register(Rn) + "]"; // TODO
@@ -87,8 +88,6 @@ std::string handle_single_data_transfer(uint32_t instruction) {
             address = "[" + get_register(Rn) + "]," + shift_text;
         }
     }
-
-
     if (L) { // load
         instruction_text = "LDR" + cond + B_flag + get_register(Rd) + address;
     } 

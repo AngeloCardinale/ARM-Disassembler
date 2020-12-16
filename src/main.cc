@@ -26,8 +26,8 @@ using namespace std;
 
 int main( int argc, char** argv) {
 
-    std::string executable_path = "test.out";
-    std::string output_path = "output.txt";
+    std::string executable_path = argv[1];
+    std::string output_path = argv[2];
 
     vector<uint32_t> instructions; 
     instructions = read_executable(executable_path);
@@ -37,7 +37,6 @@ int main( int argc, char** argv) {
 
     for (uint32_t instruction : instructions) {
         instruction_type type = get_instruction_type(instruction);
-        
         switch(type) {
             case instruction_type::data_processing:
                 output.push_back(handle_data_processing(instruction));
@@ -86,7 +85,6 @@ int main( int argc, char** argv) {
                 break;
         }
     }
-
     print_to_file(output_path, output);
 
     return 0;
