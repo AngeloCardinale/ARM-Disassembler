@@ -31,6 +31,7 @@ std::string handle_multiply(uint32_t instruction) {
     uint32_t rn = (instruction >> 12) & 0xFU;
     uint32_t rs = (instruction >> 8) & 0xFU;
     uint32_t rm = (instruction) & 0xFU;
+    
     std::string s_flag = (S == 0x1U) ? "S" : "";
     
     if (A) { // MLA

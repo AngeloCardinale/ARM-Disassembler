@@ -27,8 +27,8 @@ std::string handle_co_reg_transfer(uint32_t instruction) {
         <expression 2>      = where present is evaluated to a constant and placed in the CP field
         
         <MRC|MCR>{cond}   p#,<expression 1>,cd,cn,cm{,<expression 2>}
-        
     */
+   
     std::string cond = get_condition_code(instruction);
     std::string instruction_text;
 

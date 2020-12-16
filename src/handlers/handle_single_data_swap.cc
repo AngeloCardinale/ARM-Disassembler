@@ -23,7 +23,6 @@ std::string handle_single_data_swap(uint32_t instruction) {
         
 
         <SWP>{cond}{B} Rd,Rm,[Rn]
-
     */
     
     std::string cond = get_condition_code(instruction);
@@ -33,6 +32,7 @@ std::string handle_single_data_swap(uint32_t instruction) {
     uint32_t Rn = (instruction >> 16) & 0xFU;    // Base register
     uint32_t Rd = (instruction >> 12) & 0xFU;    // Destination Register
     uint32_t Rm = instruction & 0xFU;            // Source Register
+
     std::string b_flag = (B == 0x1U) ? "B " : " ";
     
     instruction_text = "SWP" + cond + b_flag +  get_register(Rd) + "," + get_register(Rm) + ",[" + get_register(Rn)+ "]";

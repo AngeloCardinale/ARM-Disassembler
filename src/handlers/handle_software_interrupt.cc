@@ -7,7 +7,6 @@
 std::string handle_software_interrupt(uint32_t instruction) {
    
    /*
-
         Cond            = 31 - 28  Condition field
         1111            = 27 - 24  Identifier
         Comment Field   = 23 - 0   Used to communicate information to the supervisor code

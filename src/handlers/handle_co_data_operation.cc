@@ -35,7 +35,7 @@ std::string handle_co_data_operation(uint32_t instruction) {
     uint32_t CP = (instruction >> 5) & 0x7U;
     uint32_t CRm = instruction & 0xFU; 
 
-    if(CP != 0) {
+    if (CP != 0) {
         instruction_text = "CDP" + cond + " p" + std::to_string(CPnum) +"," + std::to_string(CPOpc) + ",c" + std::to_string(CRd) + ",c" + std::to_string(CRn) + ",c" + std::to_string(CRm) + "," + std::to_string(CP);
     }
     else {

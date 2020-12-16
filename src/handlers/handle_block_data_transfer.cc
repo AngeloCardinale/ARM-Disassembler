@@ -30,14 +30,15 @@ std::string handle_block_data_transfer(uint32_t instruction) {
     uint32_t L = (instruction >> 20) & 0x1U;
     uint32_t Rn = (instruction >> 16) & 0xFU;
     uint32_t Register_List = instruction & 0xFFFFU;
+
     std::string W_flag = (W == 0x1U) ? "!" : "";
     std::string S_flag = (S == 0x1U) ? "^" : "";
     std::string Rlist;
 
     int count = 0;
     for (int i = 0; i < 16; i++) {
-        if((Register_List >> i) & 0x1U == 0x1U) {
-            if(count == 0) {
+        if ((Register_List >> i) & 0x1U == 0x1U) {
+            if (count == 0) {
                 Rlist = Rlist + get_register(i);
             }
             else {
@@ -47,10 +48,10 @@ std::string handle_block_data_transfer(uint32_t instruction) {
         } 
     }
     
-    if(L == 0x1U) {
-        if(P == 0x1U) {
-            if(U == 0x1U) {
-                if(get_register(Rn) == "SP") {
+    if (L == 0x1U) {
+        if (P == 0x1U) {
+            if (U == 0x1U) {
+                if (get_register(Rn) == "SP") {
                     instruction_text = "LDM" + cond + "ED " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
                 }
                 else {
@@ -58,7 +59,7 @@ std::string handle_block_data_transfer(uint32_t instruction) {
                 }
             }
             else {
-                if(get_register(Rn) == "SP") {
+                if (get_register(Rn) == "SP") {
                     instruction_text = "LDM" + cond + + "EA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
                 }
                 else {
@@ -67,8 +68,8 @@ std::string handle_block_data_transfer(uint32_t instruction) {
             } 
         }
         else {
-            if(U == 0x1U) {
-                if(get_register(Rn) == "SP") {
+            if (U == 0x1U) {
+                if (get_register(Rn) == "SP") {
                     instruction_text = "LDM" + cond + + "FD " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
                 }
                 else {
@@ -76,7 +77,7 @@ std::string handle_block_data_transfer(uint32_t instruction) {
                 }
             }
             else {
-                if(get_register(Rn) == "SP") {
+                if (get_register(Rn) == "SP") {
                     instruction_text = "LDM" + cond + + "FA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
                 }
                 else {
@@ -86,9 +87,9 @@ std::string handle_block_data_transfer(uint32_t instruction) {
         }
     }
     else {
-        if(P == 0x1U) {
-            if(U == 0x1U) {
-                if(get_register(Rn) == "SP") {
+        if (P == 0x1U) {
+            if (U == 0x1U) {
+                if (get_register(Rn) == "SP") {
                     instruction_text = "STM" + cond + "FA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
                 }
                 else {
@@ -96,7 +97,7 @@ std::string handle_block_data_transfer(uint32_t instruction) {
                 }
             }
             else {
-                if(get_register(Rn) == "SP") {
+                if (get_register(Rn) == "SP") {
                     instruction_text = "STM" + cond + "FD " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
                 }
                 else {
@@ -105,8 +106,8 @@ std::string handle_block_data_transfer(uint32_t instruction) {
             } 
         }
         else {
-            if(U == 0x1U) {
-                if(get_register(Rn) == "SP") {
+            if (U == 0x1U) {
+                if (get_register(Rn) == "SP") {
                     instruction_text = "STM" + cond + "EA " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
                 }
                 else {
@@ -114,7 +115,7 @@ std::string handle_block_data_transfer(uint32_t instruction) {
                 }
             }
             else {
-                if(get_register(Rn) == "SP") {
+                if (get_register(Rn) == "SP") {
                     instruction_text = "STM" + cond + "ED " + get_register(Rn) + W_flag + ",{" + Rlist + "}" + S_flag;
                 }
                 else {

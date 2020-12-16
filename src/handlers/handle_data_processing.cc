@@ -9,7 +9,6 @@
 
 std::string handle_data_processing(uint32_t instruction) {
     /*
-
         condition   = 31 - 28   Condition field
         00          = 27 - 26   Identifier
         I           = 25        Immediate Operand
@@ -56,8 +55,6 @@ std::string handle_data_processing(uint32_t instruction) {
                 immediate 8-bit field to match the expression. If this isimpossible, it will give an error.
                 <shift> is <shiftname> <register> or <shiftname> #expression, or RRX (rotate right one bit with extend).
                 <shiftname>s are: ASL, LSL, LSR, ASR, ROR. (ASL is a synonym for LSL,they assemble to the same code.)
-    
-
     */
 
     std::string cond = get_condition_code(instruction);
@@ -73,7 +70,6 @@ std::string handle_data_processing(uint32_t instruction) {
     uint32_t Rm = instruction & 0xFU;   
     uint32_t Rotate = (instruction >> 8) & 0xFU;
     uint32_t Imm = instruction & 0xFFU;
-    
 
     std::string Rximm = ",#" + std::to_string(Imm);
     std::string Rxreg =",R" + std::to_string(Rm); 

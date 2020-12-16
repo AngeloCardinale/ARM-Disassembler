@@ -56,6 +56,7 @@ std::string handle_hwdt_imm_offset(uint32_t instruction) {
     uint32_t H = (instruction >> 5) & 0x1U;              //    If SH = 10 -> Signed byte, 11 -> Signed Halfwords
     int32_t OffsetLow = (instruction) & 0xFU;           // Immediate Offset (Low Nibble)
     int32_t offset = (0x00U | OffsetHigh << 4) | OffsetLow; 
+
     std::string sh_sb_h = get_sb_sh_h(S, H);
     std::string ldr_str = (L == 0x1U) ? "LDR" : "STR";
     std::string exclamation = (W == 0x1U) ? "!" : "";
@@ -75,6 +76,7 @@ std::string handle_hwdt_imm_offset(uint32_t instruction) {
             address = "[" + get_register(Rn) + "],#" + std::to_string(offset);  
         }
     }
+    
     instruction_text = ldr_str + cond + sh_sb_h + get_register(Rd) + "," + address;
 
     return instruction_text;

@@ -68,6 +68,7 @@ std::string handle_single_data_transfer(uint32_t instruction) {
     uint32_t shift = (instruction >> 4) & 0xFFU;
     uint32_t Rm = (instruction) & 0xFU;
     uint32_t offset = (instruction) & 0xFFFU;
+    
     std::string exclamation = (W == 0x1U) ? "!" : "";
     std::string pos_neg = (U == 0x1U) ? "" : "-";
     std::string B_flag = (B == 0x1U) ? "B" : "";

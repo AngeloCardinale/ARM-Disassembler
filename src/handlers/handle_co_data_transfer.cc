@@ -38,7 +38,6 @@ std::string handle_co_data_transfer(uint32_t instruction) {
                                     Rn is an expression evaluating to a valid ARM7TDMI-S register number.
                             NOTE: If Rn is R15, the assembler will subtract 8 from the offset value to allow for pipelining.
         <LDC|STC>{cond} {L}  p#,cd,<Address>
-        
     */
 
     std::string cond = get_condition_code(instruction);
@@ -51,8 +50,9 @@ std::string handle_co_data_transfer(uint32_t instruction) {
     uint32_t L = (instruction >> 20) & 0x1U;             // 0 = Store to memory, 1 = load from memory
     uint32_t Rn = (instruction >> 16) & 0xFU;            // Base register
     uint32_t CRd = (instruction >> 12) & 0xFU;           // Coprocessor source/destination register
-    uint32_t CPnum = (instruction >> 8) & 0xFU;            // Coprocessor Number
+    uint32_t CPnum = (instruction >> 8) & 0xFU;          // Coprocessor Number
     uint32_t Offset = instruction & 0xFFU;               // Unsigned 8 bit immediate offset
+
     std::string N_flag = (N == 0x1U) ? "L" : "";
     std::string exclamation = (W == 0x1U) ? "!" : "";
     std::string address;
@@ -71,7 +71,7 @@ std::string handle_co_data_transfer(uint32_t instruction) {
         }
     }
 
-    if(L) {
+    if (L) {
         instruction_text = "LDC" + cond + N_flag + "p" + std::to_string(CPnum) + ",c" + std::to_string(CRd) + address;
     }
     else {

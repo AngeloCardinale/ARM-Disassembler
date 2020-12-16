@@ -54,11 +54,13 @@ std::string handle_hwdt_reg_offset(uint32_t instruction) {
     uint32_t S = (instruction >> 6) & 0x1U;              // If SH = 00 -> SWP instruction, = 01 -> Unsigned Halfwords
     uint32_t H = (instruction >> 5) & 0x1U;              //    If SH = 10 -> Signed byte, 11 -> Signed Halfwords
     uint32_t Rm = (instruction) & 0xFU;                  // Register Offset
+    
     std::string sh_sb_h = get_sb_sh_h(S, H);
     std::string pos_neg = (U == 0x1U) ? "" : "-";
     std::string ldr_str = (L == 0x1U) ? "LDR" : "STR";
     std::string exclamation = (W == 0x1U) ? "!" : "";
     std::string address;
+
     if (P) { // pre indexed
         if (Rm == 0x0U) {
             address = "[" + get_register(Rn) + "]";
@@ -73,6 +75,7 @@ std::string handle_hwdt_reg_offset(uint32_t instruction) {
             address = "[" + get_register(Rn) + "]," + pos_neg + get_register(Rm);  
         }
     }
+
     instruction_text = ldr_str + cond + sh_sb_h + get_register(Rd) + "," + address;
     
     return instruction_text;
