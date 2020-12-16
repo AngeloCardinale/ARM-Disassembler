@@ -56,9 +56,6 @@ std::vector<uint32_t> read_executable(std::string fpath) {
     // instruction |= buffer[1] << 8;       // 0xddccBB00
     // instruction |= buffer;               // 0xddccbbAA
     for (int i = 0; i < lSize; i+=4) {
-        if (i == 0) {
-            continue; // skip start of file binary
-        }
         uint32_t instruction = 0u;
         instruction |= (buffer[i+3] << 24) & 0xFF000000;
         instruction |= (buffer[i+2] << 16) & 0x00FF0000;
