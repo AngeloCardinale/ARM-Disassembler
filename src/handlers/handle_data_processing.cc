@@ -62,38 +62,31 @@ std::string handle_data_processing(uint32_t instruction) {
 
     std::string cond = get_condition_code(instruction);
     std::string instruction_text;
-
     std::string opcode = get_op_code(instruction, 21); 
-    uint32_t I = (instruction >> 25) & 0x1U;      // Immediate Operand 0 = operand 2 is a register, 1 = operand 2 is an immediate value
-    uint32_t S = (instruction >> 20) & 0x1U;      // Set Condition Codes 0 = do not alter condition codes, 1 = set condition codes
-    uint32_t Rn = (instruction >> 16) & 0xFU;     // 1st operand register
-    uint32_t Rd = (instruction >> 12) & 0xFU;     // Destination register
-    uint32_t Operand2 = instruction & 0xFFFU;           // Operand 2
-    //For I = 0 (Register) 
-    uint32_t Shift =  (instruction >> 4) & 0xFFU;   // Shift applied to Rm
-    uint32_t Rm = instruction & 0xFU;               // 2nd Operand register    
-    //For I = 1 (Immediate)
-    uint32_t Rotate = (instruction >> 8) & 0xFU;    // Shift applied to Imm
-    uint32_t Imm = instruction & 0xFFU;             // Unsigned 8 bit Immediate value
-    std::string s_flag = (S == 0x1U) ? "S " : " ";
-    std::string Rximm = ",#" + std::to_string(Imm); // MOVE COMMA TO SHIFT FUNCTION
-    std::string Rxreg =",R" + std::to_string(Rm); //possibly change to getregister(rm) + ","
-    //std::string Rximm = (Imm == 0) ?  "" : (",#" + std::to_string(Imm) + ","); // TERNARY CHECK NOT NECESSARY
-     //   std::string Rxreg = (Rm == 0) ?  "" :",R" + std::to_string(Rm) + ",";  // TERNARY CHECK NOT NECESSARY
+
+    uint32_t I = (instruction >> 25) & 0x1U;
+    uint32_t S = (instruction >> 20) & 0x1U;
+    uint32_t Rn = (instruction >> 16) & 0xFU;
+    uint32_t Rd = (instruction >> 12) & 0xFU;
+    uint32_t Operand2 = instruction & 0xFFFU;
+    uint32_t Shift =  (instruction >> 4) & 0xFFU;
+    uint32_t Rm = instruction & 0xFU;   
+    uint32_t Rotate = (instruction >> 8) & 0xFU;
+    uint32_t Imm = instruction & 0xFFU;
+    
+
+    std::string Rximm = ",#" + std::to_string(Imm);
+    std::string Rxreg =",R" + std::to_string(Rm); 
     std::string OP2a = (I == 0x1U) ? Rximm : Rxreg;
-   
-    // This might give errors if there is nothing to shift by and the instruction should end with Rn not the shift instruction
-        
-    if (opcode == "MOV" || opcode == "MVN")
-    {
+    std::string s_flag = (S == 0x1U) ? "S " : " "; 
+
+    if (opcode == "MOV" || opcode == "MVN") {
         instruction_text = opcode + cond + s_flag + get_register(Rn)  + OP2a + shift(Operand2);
     }
-    else if(opcode == "CMP" || opcode == "CMN" || opcode == "TEQ" || opcode == "TST")
-    {
+    else if (opcode == "CMP" || opcode == "CMN" || opcode == "TEQ" || opcode == "TST") {
         instruction_text = opcode + cond + s_flag + get_register(Rn) + OP2a  + shift(Operand2);
     }
-    else
-    {
+    else {
         instruction_text = opcode + cond + s_flag + get_register(Rd)+ "," + get_register(Rn)+ OP2a  + shift(Operand2);
     }
 
