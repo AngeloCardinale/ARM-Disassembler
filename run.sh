@@ -1,1 +1,1 @@
-./a.out test.out output.txt
+./dissassembler.out test.out output.txt
