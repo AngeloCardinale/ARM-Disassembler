@@ -77,7 +77,7 @@ std::string handle_single_data_transfer(uint32_t instruction) {
         if (offset == 0x0U) {
             address = "[" + get_register(Rn) + "]"; // TODO
         } else {
-            address = "[" + get_register(Rn) + "," + shift_text; // TODO
+            address = "[" + get_register(Rn) + "," + shift_text + "]"; // TODO
         }
     }
     else {  // post indexed

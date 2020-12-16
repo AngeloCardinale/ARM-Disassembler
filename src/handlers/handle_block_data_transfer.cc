@@ -35,16 +35,17 @@ std::string handle_block_data_transfer(uint32_t instruction) {
     std::string S_flag = (S == 0x1U) ? "^" : "";
     std::string Rlist;
 
+    int count = 0;
     for (int i = 0; i < 16; i++) {
-        int count = 0;
         if((Register_List >> i) & 0x1U == 0x1U) {
             if(count == 0) {
                 Rlist = Rlist + get_register(i);
             }
             else {
-                Rlist = Rlist + "," + get_register(i);
+                Rlist = Rlist + get_register(i) + ",";
             }
         }
+        count++;
     }
     
     if(L == 0x1U) {

@@ -22,14 +22,14 @@ std::string shift(uint32_t fragment) {
     std::string shift_text;
 
     if (bit4 == 0x1U && bit7 == 0x0U) { // register shift
-        shift_text = type_text + " " + get_register((fragment >> 4) & 0xF);
+        shift_text = "," + type_text + " " + get_register((fragment >> 4) & 0xF);
     }
     else { // immediate value shift
         uint32_t immediate_value = (fragment >> 3) & 0x1F;
         if (immediate_value == 0x0U) {
             return "";
         }
-        shift_text = type_text + " #" + std::to_string(immediate_value);
+        shift_text = "," + type_text + " #" + std::to_string(immediate_value);
     }
 
     // LSL #4

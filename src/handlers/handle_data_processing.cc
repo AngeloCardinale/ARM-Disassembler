@@ -78,8 +78,8 @@ std::string handle_data_processing(uint32_t instruction) {
     std::string instruction_text;
     std::string s_flag = (S == 0x1U) ? "S " : " ";
     
-    std::string Rximm = ",#" + std::to_string(Imm) + ","; // MOVE COMMA TO SHIFT FUNCTION
-        std::string Rxreg =",R" + std::to_string(Rm) + ","; //possibly change to getregister(rm) + ","
+    std::string Rximm = ",#" + std::to_string(Imm) ; // MOVE COMMA TO SHIFT FUNCTION
+        std::string Rxreg =",R" + std::to_string(Rm) ; //possibly change to getregister(rm) + ","
     
     //std::string Rximm = (Imm == 0) ?  "" : (",#" + std::to_string(Imm) + ","); // TERNARY CHECK NOT NECESSARY
      //   std::string Rxreg = (Rm == 0) ?  "" :",R" + std::to_string(Rm) + ",";  // TERNARY CHECK NOT NECESSARY
