@@ -1,1 +1,1 @@
-g++ src/main.cc -o dissassembler.out
+g++ src/main.cc -o dissassembler
