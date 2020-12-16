@@ -42,10 +42,11 @@ std::string handle_block_data_transfer(uint32_t instruction) {
                 Rlist = Rlist + get_register(i);
             }
             else {
-                Rlist = Rlist + get_register(i) + ",";
+                Rlist = Rlist + "," + get_register(i);
             }
+            count++;
         }
-        count++;
+       
     }
     
     if(L == 0x1U) {

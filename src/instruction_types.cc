@@ -20,6 +20,7 @@ enum instruction_type {
     co_data_operation, // coprocessor data operation
     co_reg_transfer,   // coprocessor register transfer
     software_interrupt,
+    undefined,
 };
 
 std::map<uint32_t, instruction_type> bitmasks ({
@@ -37,6 +38,7 @@ std::map<uint32_t, instruction_type> bitmasks ({
     {0x01000090U, instruction_type::single_data_swap},
     {0x00800090U, instruction_type::multiply_long},
     {0x00000090U, instruction_type::multiply},
+    {0x06000010U, instruction_type::undefined},
     {0x00000000U, instruction_type::data_processing},
 
     // {hex_for_mask_to_check_type, instruction_type}

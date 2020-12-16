@@ -16,6 +16,7 @@
 #include "handlers/handle_co_data_operation.cc"
 #include "handlers/handle_co_reg_transfer.cc"
 #include "handlers/handle_software_interrupt.cc"
+#include "handlers/handle_undefined.cc"
 
 #include "read_executable.cc"
 #include "instruction_types.cc"
@@ -79,6 +80,9 @@ int main( int argc, char** argv) {
                 break;
             case instruction_type::software_interrupt:
                 output.push_back(handle_software_interrupt(instruction));
+                break;
+            case instruction_type::undefined:
+                output.push_back(handle_undefined(instruction));
                 break;
         }
     }
