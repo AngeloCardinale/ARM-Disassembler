@@ -9,7 +9,7 @@
 std::string get_shift(uint32_t I, uint32_t offset, uint32_t Rm, std::string pos_neg) {
     std::string output;
     if (I) { // shift and Rm
-        output = pos_neg + get_register(Rm) + "," + shift(offset);
+        output = pos_neg + get_register(Rm) + shift(offset); //Removed comma and moved to shift function - Angelo
     } else { // Immediate offset
         output = "#" + std::to_string(offset);
     }
