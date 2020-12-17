@@ -3,12 +3,13 @@
 #include <unordered_map>
 #include "registers.cc"
 
-std::unordered_map<uint32_t, std::string> shift_type ({
-    {0x0, "LSL"},
-    {0x1, "LSR"},
-    {0x2, "ASR"},
-    {0x3, "ROR"}
-});
+
+const std::string shift_type[4] = {
+    "LSL",
+    "LSR",
+    "ASR",
+    "ROR"
+};
 
 std::string shift(uint32_t fragment) {
     uint32_t bit4 = (fragment % 2);

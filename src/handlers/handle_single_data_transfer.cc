@@ -74,7 +74,7 @@ std::string handle_single_data_transfer(uint32_t instruction) {
     std::string B_flag = (B == 0x1U) ? "B" : "";
     std::string shift_text = get_shift(I, offset, Rm, pos_neg);
     std::string address;
-
+    
     if (P) { // pre indexed
         if (offset == 0x0U) {
             address = "[" + get_register(Rn) + "]"; // TODO
