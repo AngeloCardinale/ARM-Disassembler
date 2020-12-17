@@ -67,7 +67,7 @@ handler_function get_handler_function(uint32_t instruction) {
     std::map<uint32_t, handler_function>::reverse_iterator it;
     for (it = bitmasks.rbegin(); it != bitmasks.rend(); it++) {
         if (check_bits(instruction, it->first, it->first) == 1) {
-            if (it->second == instruction_type::multiply || it->second == instruction_type::hwdt_reg_offset) {
+            if (it->second == handle_multiply || it->second == handle_hwdt_reg_offset) {
                 if(((instruction >> 5) & 0x1U == 0x0U) && ((instruction >> 6) & 0x1U == 0x0U) && ((instruction >> 23) & 0x1U == 0x0U) && ((instruction >> 24) & 0x1U == 0x0U)) {
                     return handle_multiply;
                 }
